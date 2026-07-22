@@ -1,0 +1,122 @@
+import { useTransform, motion } from 'framer-motion';
+import StickyScene from '../animations/StickyScene';
+import { useStickyScene } from '../animations/stickySceneContext';
+
+// Assets live in /public/message so they are referenced by absolute URL.
+const quote = '/message/quote.svg';   // handwritten "Empires No Longer Need Armies." (555 x 104)
+const stamp = '/message/stamp.svg';   // monogram mark (147 x 98)
+const photo = '/message/image.webp';  // founders photo (901 x 634 ≈ 1.42:1)
+
+// Reveal an element across a scroll-progress window [start, end]:
+// blur + fade + slide-up in, holding sharp once revealed.
+const useReveal = (progress, start, end) => {
+  const opacity = useTransform(progress, [start, end], [0, 1]);
+  const blur = useTransform(progress, [start, end], ['blur(14px)', 'blur(0px)']);
+  const y = useTransform(progress, [start, end], [40, 0]);
+  return { opacity, filter: blur, y };
+};
+
+const MessageScene = () => {
+  const progress = useStickyScene();
+
+  // Text cascade — each element reveals in its own window as you scroll in.
+  const heading = useReveal(progress, 0.06, 0.22);
+  const para1 = useReveal(progress, 0.16, 0.34);
+  const para2 = useReveal(progress, 0.26, 0.46);
+  const stampR = useReveal(progress, 0.38, 0.56);
+
+  // Photo panel: reveals, then holds while the photo parallaxes through it.
+  const panel = useReveal(progress, 0.1, 0.3);
+  const panelScale = useTransform(progress, [0.1, 0.35], [0.94, 1]);
+
+  // Real parallax: the photo travels over the scene, but the drift must stay
+  // within the scale's overflow slack (≈(scale-1)/2 per edge) so no white gap
+  // ever shows. Scale stays ≥1.16 (≈8% slack) while |y| never exceeds 8%.
+  const photoY = useTransform(progress, [0, 1], ['-8%', '8%']);
+  const photoScale = useTransform(progress, [0, 1], [1.28, 1.16]);
+
+  return (
+    <section className="h-full w-full bg-white flex items-center">
+      {/* Apple-style: centered content, symmetric responsive side margins */}
+      <div className="mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.45fr] items-stretch gap-12 lg:gap-16">
+
+          {/* Left — text column */}
+          <div className="flex flex-col items-start justify-center">
+            <motion.img
+              src={quote}
+              alt="Empires No Longer Need Armies."
+              className="w-[min(340px,80%)] h-auto mb-8 will-change-transform"
+              style={heading}
+            />
+
+            <motion.p
+              className="text-[15px] md:text-base text-black/70 leading-relaxed font-light mb-6 max-w-md will-change-transform"
+              style={para1}
+            >
+              Today, the most powerful forces in the world are built by the quiet, the
+              underestimated, and those who were never meant to &ldquo;fit.&rdquo;
+            </motion.p>
+
+            <motion.p
+              className="text-[15px] md:text-base text-black/70 leading-relaxed font-light mb-10 max-w-md will-change-transform"
+              style={para2}
+            >
+              In a world that prizes the loud, we celebrate the thinkers. Where society
+              sees a &ldquo;misfit,&rdquo; we see a founder. All it takes is the right
+              environment, relentless execution, and a place where you belong.
+            </motion.p>
+
+            <motion.img
+              src={stamp}
+              alt="Meetfleet stamp"
+              className="w-[110px] h-auto will-change-transform"
+              style={stampR}
+            />
+          </div>
+
+          {/* Right — Apple-style white panel: soft shadow, hairline border,
+              very thin gradient grid, photo framed inside with parallax drift */}
+          <motion.div
+            className="relative h-full min-h-[360px] rounded-[28px] bg-white border border-black/[0.06] shadow-[0_10px_60px_rgba(0,0,0,0.10)] p-3 sm:p-4 flex overflow-hidden will-change-transform"
+            style={{ opacity: panel.opacity, filter: panel.filter, scale: panelScale }}
+          >
+            {/* Thin gradient grid — 1px lines, faded via radial mask */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 opacity-[0.5]"
+              style={{
+                backgroundImage:
+                  'linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)',
+                backgroundSize: '28px 28px',
+                WebkitMaskImage:
+                  'radial-gradient(ellipse at center, black 40%, transparent 85%)',
+                maskImage:
+                  'radial-gradient(ellipse at center, black 40%, transparent 85%)',
+              }}
+            />
+
+            {/* Photo frame — fills the panel, real parallax + scale */}
+            <div className="relative z-10 w-full overflow-hidden rounded-[18px]">
+              <motion.img
+                src={photo}
+                alt="Founders at work"
+                style={{ y: photoY, scale: photoScale }}
+                className="w-full h-full min-h-[336px] object-cover origin-center will-change-transform"
+              />
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Message = () => (
+  <StickyScene trackVh={220}>
+    <MessageScene />
+  </StickyScene>
+);
+
+export default Message;
