@@ -1,21 +1,26 @@
 import { useRef } from 'react';
-import { useScroll, useSpring, motion } from 'framer-motion';
+import { useScroll, useSpring, useMotionValue, motion } from 'framer-motion';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { StickySceneContext } from './stickySceneContext';
 
 /**
- * StickyScene — an Apple-style sticky scroll scene.
+ * StickyScene — an Apple-style sticky scroll scene (desktop) with a safe
+ * mobile fallback.
  *
- * Renders a tall scroll track (`height = 100 * trackVh`) with a viewport-height
- * panel pinned via `position: sticky`. As you scroll through the track, the panel
- * stays fixed and `progress` (a smoothed 0→1 MotionValue) advances. Children read
- * it via `useStickyScene()` and map it to any transform (scale, opacity, blur, y…).
+ * DESKTOP (lg+): a tall scroll track (`height = 100 * trackVh`) with a
+ * viewport-height panel pinned via `position: sticky`. Scroll progress
+ * (0→1, spring-smoothed) drives child transforms via useStickyScene().
  *
- * offset ['start start', 'end end'] means: progress = 0 the moment the track's top
- * hits the viewport top (panel becomes stuck), and 1 when the track's bottom does
- * (panel about to release) — so the full animation range == the sticky duration.
+ * MOBILE (< lg): the pin/clip breaks when content is taller than the
+ * viewport — the top (heading SVGs, mockups) gets cut off. So on mobile we
+ * drop the pin entirely: the section flows normally (auto height, natural
+ * top gap, nothing clipped) and progress is frozen at a "fully revealed"
+ * value (0.5) so reveal transforms resolve to their visible mid-state and
+ * never hide content.
  */
 const StickyScene = ({ children, trackVh = 200, className = '', stiffness = 120, damping = 30 }) => {
   const trackRef = useRef(null);
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   const { scrollYProgress } = useScroll({
     target: trackRef,
@@ -23,11 +28,22 @@ const StickyScene = ({ children, trackVh = 200, className = '', stiffness = 120,
   });
 
   // Smooth the raw scroll progress so motion feels weighty, not twitchy.
-  const progress = useSpring(scrollYProgress, {
-    stiffness,
-    damping,
-    restDelta: 0.0005,
-  });
+  const smooth = useSpring(scrollYProgress, { stiffness, damping, restDelta: 0.0005 });
+
+  // Mobile: a static, fully-revealed progress so transforms don't clip content.
+  const staticProgress = useMotionValue(0.5);
+  const progress = isDesktop ? smooth : staticProgress;
+
+  if (!isDesktop) {
+    // Natural document flow — no pin, no clip, content sets its own height.
+    return (
+      <div className={`relative ${className}`}>
+        <StickySceneContext.Provider value={progress}>
+          {children}
+        </StickySceneContext.Provider>
+      </div>
+    );
+  }
 
   return (
     <div ref={trackRef} style={{ height: `${trackVh}vh` }} className={`relative ${className}`}>

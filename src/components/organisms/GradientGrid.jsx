@@ -138,7 +138,7 @@ const GradientGridScene = () => {
   const cardScale = useTransform(progress, [0.18, 0.5], [0.96, 1]);
 
   return (
-    <section className="relative h-full w-full bg-white flex items-center justify-center overflow-hidden">
+    <section className="relative w-full bg-white overflow-hidden py-20 lg:py-0 lg:h-full lg:flex lg:items-center lg:justify-center">
       {/* Perspective stage */}
       <motion.div
         style={{ opacity, filter: blur, perspective: 1400, perspectiveOrigin: '50% 40%' }}

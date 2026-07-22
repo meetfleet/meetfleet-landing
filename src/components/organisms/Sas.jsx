@@ -26,7 +26,7 @@ const SasScene = () => {
   const attribution = useReveal(progress, 0.3, 0.5, 24);
 
   return (
-    <section className="h-full w-full bg-white flex items-center">
+    <section className="w-full bg-white py-24 lg:py-0 lg:h-full lg:flex lg:items-center">
       {/* Apple-style: centered, symmetric responsive side margins */}
       <div className="mx-auto w-full max-w-3xl px-6 sm:px-10 text-center flex flex-col items-center">
 

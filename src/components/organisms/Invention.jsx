@@ -27,7 +27,7 @@ const InventionScene = () => {
   const viewerX = useTransform(progress, [0, 1], ['22%', '-4%']);
 
   return (
-    <section className="h-full w-full bg-white flex items-center overflow-hidden">
+    <section className="w-full bg-white overflow-hidden py-20 lg:py-0 lg:h-full lg:flex lg:items-center">
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-0">
 
         {/* Left — text column (padded, Apple-style symmetric margins) */}
