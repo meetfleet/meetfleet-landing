@@ -68,12 +68,17 @@ const MessageScene = () => {
               environment, relentless execution, and a place where you belong.
             </motion.p>
 
-            {/* Mobile: wide stamp spanning most of the phone width */}
+            {/* Mobile: wide stamp spanning most of the phone width.
+                Uses a plain in-view reveal (not the scroll-progress one) so it
+                always resolves to fully sharp — no leftover blur on mobile. */}
             <motion.img
               src={stampMobile}
               alt="Meetfleet stamp"
               className="lg:hidden w-full max-w-none h-auto will-change-transform"
-              style={stampR}
+              initial={{ opacity: 0, filter: 'blur(12px)' }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)' }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
             />
             {/* Desktop: original monogram mark */}
             <motion.img

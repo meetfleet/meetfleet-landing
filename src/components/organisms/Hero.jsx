@@ -14,12 +14,12 @@ const Hero = () => {
       <div className="w-full h-[calc(100vh-1.5rem)] sm:h-[calc(100vh-2.5rem)] md:h-[calc(100vh-3rem)] min-h-[720px] bg-white rounded-[24px] md:rounded-[35px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] flex flex-col items-center gap-8 overflow-hidden relative p-8 sm:p-12 md:p-14">
 
         {/* Content group — centered in the available vertical space */}
-        <div className="flex-grow flex flex-col items-center justify-center gap-8 w-full max-w-2xl">
+        <div className="flex-grow flex flex-col items-center justify-center gap-4 sm:gap-8 w-full max-w-2xl">
           {/* Logo */}
           <motion.img
             src={logo}
             alt="Meetfleet Logo"
-            className="w-[52px] h-[52px]"
+            className="w-9 h-9 sm:w-[52px] sm:h-[52px]"
             initial={{ opacity: 0, filter: 'blur(12px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}

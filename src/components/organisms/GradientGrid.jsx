@@ -113,23 +113,31 @@ const GradientGridScene = () => {
 
   // Reveal — long, soft fade + un-blur.
   const opacity = useTransform(progress, [0.03, 0.28], [0, 1]);
-  const blur = useTransform(progress, [0.03, 0.3], ['blur(20px)', 'blur(0px)']);
+  const blur = useTransform(progress, [0.03, 0.32], ['blur(26px)', 'blur(0px)']);
 
-  // Tilt eases in and out (intermediate keyframes) rather than moving linearly.
-  const rotX = useTransform(progress, [0, 0.5, 1], [42, 26, 20]);
-  const rotY = useTransform(progress, [0, 0.5, 1], [-12, -22, -27]);
+  // Cinematic tilt: sweeps from a steep raked angle to a gentle rest, easing
+  // through intermediate keyframes so it decelerates into place.
+  const rotX = useTransform(progress, [0, 0.55, 1], [52, 30, 22]);
+  const rotY = useTransform(progress, [0, 0.55, 1], [-6, -22, -29]);
+  const rotZ = useTransform(progress, [0, 1], [7, 2]);
 
-  // Gentle float: drifts up, settles to full scale, lifts slightly in Z.
-  const ty = useTransform(progress, [0, 1], ['9%', '-7%']);
-  const scale = useTransform(progress, [0, 0.5, 1], [0.92, 0.99, 1]);
-  const tz = useTransform(progress, [0, 1], [-120, 40]);
+  // Zoomed-out float: starts small & far (shows the most tiles), drifts up and
+  // eases toward full scale while lifting forward in Z.
+  const ty = useTransform(progress, [0, 1], ['12%', '-9%']);
+  const scale = useTransform(progress, [0, 0.5, 1], [0.72, 0.9, 0.98]);
+  const tz = useTransform(progress, [0, 1], [-280, 60]);
 
-  // Per-row parallax — rows glide at slightly different rates so the plane
-  // feels alive and layered, not rigid. One entry per row (ROWS = 3).
+  // Per-row parallax — stronger, so rows visibly cascade at different depths.
   const rowY = [
-    useTransform(progress, [0, 1], ['3%', '-3%']),
+    useTransform(progress, [0, 1], ['6%', '-6%']),
     useTransform(progress, [0, 1], ['0%', '0%']),
-    useTransform(progress, [0, 1], ['-3%', '3%']),
+    useTransform(progress, [0, 1], ['-6%', '6%']),
+  ];
+  // Subtle per-row scale so the middle row sits slightly forward — more depth.
+  const rowScale = [
+    useTransform(progress, [0, 1], [0.97, 1]),
+    useTransform(progress, [0, 1], [1.0, 1.04]),
+    useTransform(progress, [0, 1], [0.97, 1]),
   ];
 
   // Glass card — reveals a touch after the grid, settling gently into place.
@@ -149,23 +157,23 @@ const GradientGridScene = () => {
           style={{
             rotateX: rotX,
             rotateY: rotY,
-            rotateZ: 3,
+            rotateZ: rotZ,
             scaleX: 1.22,
             scale,
             y: ty,
             z: tz,
             transformStyle: 'preserve-3d',
           }}
-          className="flex flex-col gap-5 md:gap-6 will-change-transform"
+          className="flex flex-col gap-4 md:gap-6 will-change-transform"
         >
           {Array.from({ length: ROWS }, (_, row) => (
             <motion.div
               key={row}
-              style={{ y: rowY[row], transformStyle: 'preserve-3d' }}
-              className="flex gap-5 md:gap-6 will-change-transform"
+              style={{ y: rowY[row], scale: rowScale[row], transformStyle: 'preserve-3d' }}
+              className="flex gap-4 md:gap-6 will-change-transform"
             >
               {Array.from({ length: COLS }, (_, col) => (
-                <GradientTile key={col} seed={row * COLS + col} size={118} />
+                <GradientTile key={col} seed={row * COLS + col} size={96} />
               ))}
             </motion.div>
           ))}
