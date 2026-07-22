@@ -4,7 +4,8 @@ import { useStickyScene } from '../animations/stickySceneContext';
 
 // Assets live in /public/message so they are referenced by absolute URL.
 const quote = '/message/quote.svg';   // handwritten "Empires No Longer Need Armies." (555 x 104)
-const stamp = '/message/stamp.svg';   // monogram mark (147 x 98)
+const stamp = '/message/stamp.svg';             // monogram mark, desktop (147 x 98)
+const stampMobile = '/mobilestamp.svg';         // wide stamp, mobile
 const photo = '/message/image.webp';  // founders photo (901 x 634 ≈ 1.42:1)
 
 // Reveal an element across a scroll-progress window [start, end]:
@@ -67,10 +68,18 @@ const MessageScene = () => {
               environment, relentless execution, and a place where you belong.
             </motion.p>
 
+            {/* Mobile: wide stamp spanning most of the phone width */}
+            <motion.img
+              src={stampMobile}
+              alt="Meetfleet stamp"
+              className="lg:hidden w-full max-w-none h-auto will-change-transform"
+              style={stampR}
+            />
+            {/* Desktop: original monogram mark */}
             <motion.img
               src={stamp}
               alt="Meetfleet stamp"
-              className="w-[110px] h-auto will-change-transform"
+              className="hidden lg:block w-[110px] h-auto will-change-transform"
               style={stampR}
             />
           </div>
