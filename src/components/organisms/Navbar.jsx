@@ -27,17 +27,21 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
 
-      const scrollPos = window.scrollY + window.innerHeight * 0.35;
-      for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
+      const viewportThreshold = window.innerHeight * 0.42;
+      let currentActive = 'hero';
+
+      for (let i = 0; i < NAV_LINKS.length; i++) {
         const id = NAV_LINKS[i].href.replace('#', '');
         const el = document.getElementById(id);
         if (el) {
-          if (scrollPos >= el.offsetTop) {
-            setActiveSection(id);
-            break;
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= viewportThreshold) {
+            currentActive = id;
           }
         }
       }
+
+      setActiveSection(currentActive);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
