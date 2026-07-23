@@ -7,6 +7,7 @@ const quote = '/message/quote.svg';   // handwritten "Empires No Longer Need Arm
 const stamp = '/message/stamp.svg';             // monogram mark, desktop (147 x 98)
 const stampMobile = '/mobilestamp.svg';         // wide stamp, mobile
 const photo = '/message/image.webp';  // founders photo (901 x 634 ≈ 1.42:1)
+const blurPlaceholder = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAPABQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKrobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCa0u4JI2DM4fGMKO/amG5USoxZjAVyeOQc0jKkFvbkk/OVB7Z68/yqvf8AyQyX8a7IJ1GAGyQQf0qSi22oWSMQ7zDnj931FFYMMt06sYJXCbuAGxRQI//Z';
 
 // Reveal an element across a scroll-progress window [start, end]:
 // blur + fade + slide-up in, holding sharp once revealed.
@@ -99,13 +100,24 @@ const MessageScene = () => {
               }}
             />
 
-            {/* Photo frame — fills the panel, real parallax + scale */}
-            <div className="relative z-10 w-full overflow-hidden rounded-[18px]">
+
+
+            {/* Photo frame — fills the panel, real parallax + scale + instant blur placeholder */}
+            <div className="relative z-10 w-full overflow-hidden rounded-[18px] bg-gray-100">
+              {/* Instant blur placeholder while full image loads */}
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-cover bg-center filter blur-lg scale-110 pointer-events-none opacity-80"
+                style={{ backgroundImage: `url(${blurPlaceholder})` }}
+              />
               <motion.img
                 src={photo}
                 alt="Founders at work"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
                 style={{ y: photoY, scale: photoScale }}
-                className="w-full h-full min-h-[336px] object-cover origin-center will-change-transform"
+                className="relative z-10 w-full h-full min-h-[336px] object-cover origin-center will-change-transform"
               />
             </div>
           </motion.div>
