@@ -9,21 +9,21 @@ const stampMobile = '/mobilestamp.svg';         // wide stamp, mobile
 const photo = '/message/image.webp';  // founders photo (901 x 634 ≈ 1.42:1)
 const blurPlaceholder = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAPABQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKrobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCa0u4JI2DM4fGMKO/amG5USoxZjAVyeOQc0jKkFvbkk/OVB7Z68/yqvf8AyQyX8a7IJ1GAGyQQf0qSi22oWSMQ7zDnj931FFYMMt06sYJXCbuAGxRQI//Z';
 
-// Reveal an element across a scroll-progress window [start, end]:
-// blur + fade + slide-up in, holding sharp once revealed.
-const useReveal = (progress, start, end) => {
-  const opacity = useTransform(progress, [start, end], [0, 1]);
-  const blur = useTransform(progress, [start, end], ['blur(14px)', 'blur(0px)']);
-  const y = useTransform(progress, [start, end], [40, 0]);
+// Reveal an element across a scroll-progress window:
+// resolves to fully sharp & visible immediately at section start (progress >= 0)
+const useReveal = (progress, start = 0, end = 0.04) => {
+  const opacity = useTransform(progress, [start, end], [1, 1]);
+  const blur = useTransform(progress, [start, end], ['blur(0px)', 'blur(0px)']);
+  const y = useTransform(progress, [start, end], [0, 0]);
   return { opacity, filter: blur, y };
 };
 
 const MessageScene = () => {
   const progress = useStickyScene();
 
-  // Fast unified reveal — all elements un-blur together instantly at once.
-  const reveal = useReveal(progress, 0.01, 0.06);
-  const panelScale = useTransform(progress, [0.01, 0.06], [0.96, 1]);
+  // Instant clear reveal — content is 100% visible immediately when scrolled to/focused.
+  const reveal = useReveal(progress, 0, 0.04);
+  const panelScale = useTransform(progress, [0, 0.04], [1, 1]);
 
   // Real parallax: the photo travels over the scene, but the drift must stay
   // within the scale's overflow slack (≈(scale-1)/2 per edge) so no white gap

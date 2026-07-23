@@ -94,7 +94,7 @@ const Navbar = () => {
   return (
     <>
       {/* Dune Floating Card Header Wrapper */}
-      <header className="fixed top-0 inset-x-0 z-[100001] flex justify-center pointer-events-none p-3 sm:p-5 transition-all duration-300 w-full max-w-full overflow-x-hidden">
+      <header className="fixed top-0 inset-x-0 z-[100001] flex justify-center pointer-events-none p-3 sm:p-5 pb-8 sm:pb-10 transition-all duration-300 w-full max-w-full">
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: isScrolled || mobileMenuOpen ? 0 : -50, opacity: isScrolled || mobileMenuOpen ? 1 : 0 }}
