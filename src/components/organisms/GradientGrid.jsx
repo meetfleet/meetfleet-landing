@@ -84,7 +84,7 @@ const GradientTile = ({ seed, size = 150 }) => {
     >
       {/* Blurred hue blobs — borrow hue from the vivid palette */}
       <svg
-        className="absolute inset-0 block"
+        className="absolute inset-0 block animate-spin-slow"
         width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}
@@ -106,7 +106,7 @@ const GradientTile = ({ seed, size = 150 }) => {
       {/* Second blob layer with 'color' blend — injects real chroma
           (not just hue), so the splotches stay bright and saturated. */}
       <svg
-        className="absolute inset-0 block"
+        className="absolute inset-0 block animate-spin-slow-reverse"
         width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}
@@ -134,27 +134,51 @@ const GradientTile = ({ seed, size = 150 }) => {
   );
 };
 
-const COLS = 10;
-const ROWS = 3;
+const TILE_COUNT = 35; // Adjust for density
+const tilesData = Array.from({ length: TILE_COUNT }, (_, i) => {
+  const r1 = rng(i * 100 + 42)();
+  const r2 = rng(i * 101 + 43)();
+  const r3 = rng(i * 102 + 44)();
+  const r4 = rng(i * 103 + 45)();
+  const r5 = rng(i * 104 + 46)();
+  const r6 = rng(i * 105 + 47)();
+  
+  return {
+    id: i,
+    seed: i,
+    // Scatter further out so they enter/exit edges cleanly
+    left: `${-10 + r1 * 120}%`,
+    top: `${-20 + r2 * 140}%`,
+    scale: 0.3 + r3 * 1.1, // 0.3 to 1.4 for deeper field of view
+    parallaxY: (r4 - 0.5) * 1200, // Massive vertical drift (-600px to +600px)
+    parallaxX: (r5 - 0.5) * 400,  // Subtle horizontal drift
+    baseRotation: (r6 - 0.5) * 120, // Initial random rotation
+    rotationSpeed: (r1 - 0.5) * 180, // Spin dynamically while scrolling
+  };
+});
 
-// One ROWS×COLS plane of tiles. `seedBase` offsets the seeds so a second
-// (mirrored) plane never looks like a duplicate. `rowY`/`rowScale` are shared
-// motion values driving the per-row parallax/depth.
-const GridPlane = ({ seedBase, size, rowY, rowScale }) => (
-  <>
-    {Array.from({ length: ROWS }, (_, row) => (
-      <motion.div
-        key={row}
-        style={{ y: rowY[row], scale: rowScale[row], transformStyle: 'preserve-3d' }}
-        className="flex gap-4 md:gap-6 will-change-transform"
-      >
-        {Array.from({ length: COLS }, (_, col) => (
-          <GradientTile key={col} seed={seedBase + row * COLS + col} size={size} />
-        ))}
-      </motion.div>
-    ))}
-  </>
-);
+const FloatingTile = ({ t, progress, tileSize }) => {
+  const y = useTransform(progress, [0, 1], [-t.parallaxY, t.parallaxY]);
+  const x = useTransform(progress, [0, 1], [-t.parallaxX, t.parallaxX]);
+  const rotate = useTransform(progress, [0, 1], [t.baseRotation - t.rotationSpeed, t.baseRotation + t.rotationSpeed]);
+  
+  return (
+    <motion.div
+      className="absolute will-change-transform"
+      style={{
+        left: t.left,
+        top: t.top,
+        scale: t.scale,
+        x,
+        y,
+        rotate,
+        zIndex: Math.round(t.scale * 10)
+      }}
+    >
+      <GradientTile seed={t.seed} size={tileSize} />
+    </motion.div>
+  );
+};
 
 const GradientGridScene = () => {
   const sectionRef = useRef(null);
@@ -172,75 +196,29 @@ const GradientGridScene = () => {
   const opacity = useTransform(progress, [0.08, 0.32], [0, 1]);
   const blur = useTransform(progress, [0.08, 0.3], ['blur(24px)', 'blur(0px)']);
 
-  // Intense tilt: steep → flat-ish → steep the other way as it passes through.
-  const rotX = useTransform(progress, [0, 0.5, 1], [58, 20, 58]);
-  const rotY = useTransform(progress, [0, 0.5, 1], [-2, -30, -58]);
-  const rotZ = useTransform(progress, [0, 0.5, 1], [9, 2, -6]);
-
-  // Big vertical travel + a deep Z sweep for dramatic perspective.
-  const ty = useTransform(progress, [0, 1], ['22%', '-22%']);
-  const scale = useTransform(progress, [0, 0.5, 1], [0.7, 1, 0.7]);
-  const tz = useTransform(progress, [0, 0.5, 1], [-360, 80, -360]);
-
-  // Per-row parallax — strong, rows cascade at different depths.
-  const rowY = [
-    useTransform(progress, [0, 1], ['9%', '-9%']),
-    useTransform(progress, [0, 1], ['0%', '0%']),
-    useTransform(progress, [0, 1], ['-9%', '9%']),
-  ];
-  const rowScale = [
-    useTransform(progress, [0, 1], [0.96, 1]),
-    useTransform(progress, [0, 1], [1.0, 1.05]),
-    useTransform(progress, [0, 1], [0.96, 1]),
-  ];
-
   // Glass card — reveals as the grid settles near center, then holds (no exit fade).
   const cardOpacity = useTransform(progress, [0.3, 0.44], [0, 1]);
   const cardY = useTransform(progress, [0.3, 0.5], [28, 0]);
   const cardScale = useTransform(progress, [0.3, 0.5], [0.96, 1]);
 
-  const tileSize = isDesktop ? 96 : 96;
+  const tileSize = isDesktop ? 128 : 100;
 
   return (
     <section
       id="technology"
       ref={sectionRef}
-      className="relative w-full max-w-full min-h-screen py-16 lg:py-0 lg:h-screen bg-white overflow-hidden flex items-center justify-center"
+      className="relative w-full max-w-full min-h-screen py-16 lg:py-0 lg:h-screen bg-white overflow-x-clip overflow-y-visible flex items-center justify-center"
     >
-      {/* Perspective stage — overflow-hidden so wide 3D tile field is clipped to screen width */}
       <motion.div
         style={{
           opacity,
           filter: blur,
-          perspective: 1400,
-          perspectiveOrigin: '50% 50%',
         }}
-        className="w-full max-w-full flex items-center justify-center will-change-transform overflow-hidden"
+        className="absolute inset-0 w-full h-full overflow-x-clip overflow-y-visible"
       >
-        {/* Tilted plane: the original grid + a vertically-mirrored duplicate
-            below it (offset seeds so tiles never look copied), centered as one. */}
-        <motion.div
-          style={{
-            rotateX: rotX,
-            rotateY: rotY,
-            rotateZ: rotZ,
-            scaleX: 1.22,
-            scale,
-            y: ty,
-            z: tz,
-            transformStyle: 'preserve-3d',
-            willChange: 'transform',
-            backfaceVisibility: 'hidden',
-          }}
-          className="flex flex-col items-center gap-4 md:gap-6"
-        >
-          {/* Original */}
-          <GridPlane seedBase={0} size={tileSize} rowY={rowY} rowScale={rowScale} />
-          {/* Inverted duplicate — mirrored vertically, fresh seeds */}
-          <div style={{ transform: 'scaleY(-1)' }} className="flex flex-col items-center gap-4 md:gap-6">
-            <GridPlane seedBase={ROWS * COLS} size={tileSize} rowY={rowY} rowScale={rowScale} />
-          </div>
-        </motion.div>
+        {tilesData.map((t) => (
+          <FloatingTile key={t.id} t={t} progress={progress} tileSize={tileSize} />
+        ))}
       </motion.div>
 
       {/* Edge blur — progressively blur + fade the outer columns on the left

@@ -98,7 +98,7 @@ const Navbar = () => {
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: isScrolled || mobileMenuOpen ? 0 : -50, opacity: isScrolled || mobileMenuOpen ? 1 : 0 }}
           transition={{ type: 'spring', stiffness: 120, damping: 20 }}
-          className={`pointer-events-auto w-full max-w-5xl rounded-full flex items-center justify-between px-5 sm:px-7 py-3 transition-all duration-500 border ${
+          className={`pointer-events-auto w-full max-w-5xl rounded-full flex items-center justify-between px-5 sm:px-7 py-3 transition-[background,border-color,box-shadow,padding] duration-500 border will-change-transform ${
             mobileMenuOpen
               ? 'bg-transparent border-transparent shadow-none'
               : isScrolled

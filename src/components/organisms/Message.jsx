@@ -20,15 +20,9 @@ const useReveal = (progress, start, end) => {
 const MessageScene = () => {
   const progress = useStickyScene();
 
-  // Text cascade — fast, early reveals so nothing lingers blurred.
-  const heading = useReveal(progress, 0.02, 0.12);
-  const para1 = useReveal(progress, 0.06, 0.16);
-  const para2 = useReveal(progress, 0.1, 0.2);
-  const stampR = useReveal(progress, 0.14, 0.24);
-
-  // Photo panel: reveals early, then holds while the photo parallaxes through it.
-  const panel = useReveal(progress, 0.04, 0.16);
-  const panelScale = useTransform(progress, [0.04, 0.2], [0.94, 1]);
+  // Fast unified reveal — all elements un-blur together instantly at once.
+  const reveal = useReveal(progress, 0.01, 0.06);
+  const panelScale = useTransform(progress, [0.01, 0.06], [0.96, 1]);
 
   // Real parallax: the photo travels over the scene, but the drift must stay
   // within the scale's overflow slack (≈(scale-1)/2 per edge) so no white gap
@@ -48,12 +42,12 @@ const MessageScene = () => {
               src={quote}
               alt="Empires No Longer Need Armies."
               className="w-[min(340px,80%)] h-auto mb-8 will-change-transform"
-              style={heading}
+              style={reveal}
             />
 
             <motion.p
               className="text-[15px] md:text-base text-black/70 leading-relaxed font-light mb-6 max-w-md will-change-transform"
-              style={para1}
+              style={reveal}
             >
               Today, the most powerful forces in the world are built by the quiet, the
               underestimated, and those who were never meant to &ldquo;fit.&rdquo;
@@ -61,31 +55,26 @@ const MessageScene = () => {
 
             <motion.p
               className="text-[15px] md:text-base text-black/70 leading-relaxed font-light mb-10 max-w-md will-change-transform"
-              style={para2}
+              style={reveal}
             >
               In a world that prizes the loud, we celebrate the thinkers. Where society
               sees a &ldquo;misfit,&rdquo; we see a founder. All it takes is the right
               environment, relentless execution, and a place where you belong.
             </motion.p>
 
-            {/* Mobile: wide stamp spanning most of the phone width.
-                Uses a plain in-view reveal (not the scroll-progress one) so it
-                always resolves to fully sharp — no leftover blur on mobile. */}
+            {/* Mobile: wide stamp */}
             <motion.img
               src={stampMobile}
               alt="Meetfleet stamp"
               className="lg:hidden w-full max-w-none h-auto will-change-transform"
-              initial={{ opacity: 0, filter: 'blur(12px)' }}
-              whileInView={{ opacity: 1, filter: 'blur(0px)' }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.7, ease: 'easeOut' }}
+              style={reveal}
             />
             {/* Desktop: original monogram mark */}
             <motion.img
               src={stamp}
               alt="Meetfleet stamp"
               className="hidden lg:block w-[110px] h-auto will-change-transform"
-              style={stampR}
+              style={reveal}
             />
           </div>
 
@@ -93,7 +82,7 @@ const MessageScene = () => {
               very thin gradient grid, photo framed inside with parallax drift */}
           <motion.div
             className="relative h-full min-h-[360px] rounded-[28px] bg-white border border-black/[0.06] shadow-[0_10px_60px_rgba(0,0,0,0.10)] p-3 sm:p-4 flex overflow-hidden will-change-transform"
-            style={{ opacity: panel.opacity, filter: panel.filter, scale: panelScale }}
+            style={{ opacity: reveal.opacity, filter: reveal.filter, scale: panelScale }}
           >
             {/* Thin gradient grid — 1px lines, faded via radial mask */}
             <div
