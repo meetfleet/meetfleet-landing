@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download as DownloadIcon } from 'lucide-react';
 import logo from '../../assets/logo.svg';
+import { springScrollTo } from '../../utils/smoothScroll';
 
 const NAV_LINKS = [
   { name: 'OS', href: '#hero' },
@@ -80,15 +81,11 @@ const Navbar = () => {
     setPillStyle((prev) => ({ ...prev, opacity: 0 }));
   };
 
-  // Smooth scroll handler
+  // Smooth scroll handler with spring physics
   const handleScrollTo = (e, href) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    const targetId = href.replace('#', '');
-    const el = document.getElementById(targetId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    springScrollTo(href);
   };
 
   return (

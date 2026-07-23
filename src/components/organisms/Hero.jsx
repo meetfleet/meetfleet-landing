@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import heroImage from '../../assets/hero.webp';
 import logo from '../../assets/logo.svg';
+import { springScrollTo } from '../../utils/smoothScroll';
 
 const Hero = () => {
   return (
@@ -59,8 +60,7 @@ const Hero = () => {
               href="#download"
               onClick={(e) => {
                 e.preventDefault();
-                const el = document.getElementById('download');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                springScrollTo('download');
               }}
               className="px-[29px] py-[14px] text-[14px] leading-none font-light bg-[#0033FF] text-white rounded-[11px] hover:bg-[#0029cc] transition-colors w-full sm:w-auto text-center"
             >
@@ -70,8 +70,7 @@ const Hero = () => {
               href="#message"
               onClick={(e) => {
                 e.preventDefault();
-                const el = document.getElementById('message');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                springScrollTo('message');
               }}
               className="px-[29px] py-[14px] text-[14px] leading-none font-light bg-white text-black/70 rounded-[11px] border border-black/15 hover:bg-black/[0.03] transition-colors shadow-[0_3px_16px_rgba(0,0,0,0.06)] w-full sm:w-auto text-center"
             >
