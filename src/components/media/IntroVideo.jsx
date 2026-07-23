@@ -7,22 +7,22 @@ const IntroVideo = ({ onComplete }) => {
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const videoSrc = isDesktop ? '/desktop.mp4' : '/mobile.mp4';
 
+  const handleVideoEnd = () => {
+    if (onComplete) onComplete();
+  };
+
   useEffect(() => {
-    const handleVideoEnd = () => {
-      if (onComplete) onComplete();
-    };
-
     const video = videoRef.current;
-    if (video) {
-      video.addEventListener('ended', handleVideoEnd);
-      // Also auto-complete after 5 seconds in case video fails
-      const timeout = setTimeout(() => onComplete(), 5000);
+    if (!video) return;
 
-      return () => {
-        video.removeEventListener('ended', handleVideoEnd);
-        clearTimeout(timeout);
-      };
-    }
+    // Safety fallback if video fails to load altogether (20s safety margin)
+    const timeout = setTimeout(() => {
+      if (onComplete) onComplete();
+    }, 20000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [onComplete]);
 
   return (
@@ -33,12 +33,17 @@ const IntroVideo = ({ onComplete }) => {
     >
       <video
         ref={videoRef}
+        key={videoSrc}
         src={videoSrc}
         className="w-full h-full object-cover"
         autoPlay
         muted
         playsInline
-        onCanPlay={(e) => e.target.play()}
+        onEnded={handleVideoEnd}
+        onError={handleVideoEnd}
+        onCanPlay={(e) => {
+          e.target.play().catch(() => {});
+        }}
       />
     </motion.div>
   );
