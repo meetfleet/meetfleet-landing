@@ -31,7 +31,7 @@ const MessageScene = () => {
   const photoScale = useTransform(progress, [0, 1], [1.28, 1.16]);
 
   return (
-    <section className="w-full bg-white py-10 lg:py-0 lg:h-full lg:flex lg:items-center">
+    <section id="message" className="w-full bg-white py-10 lg:py-0 lg:h-full lg:flex lg:items-center">
       {/* Apple-style: centered content, symmetric responsive side margins */}
       <div className="mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.45fr] items-stretch gap-12 lg:gap-16">
