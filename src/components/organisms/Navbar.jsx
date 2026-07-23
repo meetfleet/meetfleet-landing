@@ -93,7 +93,7 @@ const Navbar = () => {
   return (
     <>
       {/* Dune Floating Card Header Wrapper */}
-      <header className="fixed top-0 inset-x-0 z-[100001] flex justify-center pointer-events-none p-3 sm:p-5 transition-all duration-300">
+      <header className="fixed top-0 inset-x-0 z-[100001] flex justify-center pointer-events-none p-3 sm:p-5 transition-all duration-300 w-full max-w-full overflow-x-hidden">
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: isScrolled || mobileMenuOpen ? 0 : -50, opacity: isScrolled || mobileMenuOpen ? 1 : 0 }}
@@ -226,7 +226,7 @@ const Navbar = () => {
             animate={{ clipPath: 'inset(0 0 0% 0 round 0px)', opacity: 1 }}
             exit={{ clipPath: 'inset(0 0 100% 0 round 28px)', opacity: 0 }}
             transition={{ duration: 0.58, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[100002] bg-[#050507]/90 backdrop-blur-[40px] backdrop-saturate-[150%] text-white flex flex-col justify-between pt-[clamp(100px,16vh,140px)] pb-12 px-[clamp(36px,10vw,64px)] min-h-dvh overflow-y-auto"
+            className="fixed inset-0 z-[100002] bg-[#050507]/90 backdrop-blur-[40px] backdrop-saturate-[150%] text-white flex flex-col justify-between pt-[clamp(100px,16vh,140px)] pb-12 px-[clamp(36px,10vw,64px)] min-h-dvh overflow-y-auto w-full max-w-full overflow-x-hidden"
           >
             {/* Dune Floating Circular Close Button (Top-Right) */}
             <button

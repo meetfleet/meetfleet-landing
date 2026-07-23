@@ -18,6 +18,11 @@
   font-display: swap;
 }
 
-html {
+html,
+body {
   font-family: 'Alliance No.2', ui-sans-serif, system-ui, sans-serif;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
 }
+

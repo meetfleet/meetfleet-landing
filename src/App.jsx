@@ -16,12 +16,12 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden w-full max-w-full">
       <AnimatePresence mode="wait">
         {showIntro ? (
           <IntroVideo key="intro" onComplete={handleIntroComplete} />
         ) : (
-          <main key="site">
+          <main key="site" className="w-full max-w-full overflow-x-hidden">
             <Navbar />
             <Hero />
             <Message />

@@ -199,15 +199,15 @@ const GradientGridScene = () => {
   const cardY = useTransform(progress, [0.3, 0.5], [28, 0]);
   const cardScale = useTransform(progress, [0.3, 0.5], [0.96, 1]);
 
-  const tileSize = isDesktop ? 96 : 128; // zoomed IN on mobile
+  const tileSize = isDesktop ? 96 : 96;
 
   return (
     <section
       id="technology"
       ref={sectionRef}
-      className="relative w-full min-h-screen py-16 lg:py-0 lg:h-screen bg-white overflow-visible flex items-center justify-center"
+      className="relative w-full max-w-full min-h-screen py-16 lg:py-0 lg:h-screen bg-white overflow-hidden flex items-center justify-center"
     >
-      {/* Perspective stage — overflow-visible & no paint containment so 3D tiles float uncropped */}
+      {/* Perspective stage — overflow-hidden so wide 3D tile field is clipped to screen width */}
       <motion.div
         style={{
           opacity,
@@ -215,7 +215,7 @@ const GradientGridScene = () => {
           perspective: 1400,
           perspectiveOrigin: '50% 50%',
         }}
-        className="w-full flex items-center justify-center will-change-transform overflow-visible"
+        className="w-full max-w-full flex items-center justify-center will-change-transform overflow-hidden"
       >
         {/* Tilted plane: the original grid + a vertically-mirrored duplicate
             below it (offset seeds so tiles never look copied), centered as one. */}
@@ -232,7 +232,7 @@ const GradientGridScene = () => {
             willChange: 'transform',
             backfaceVisibility: 'hidden',
           }}
-          className="flex flex-col items-center gap-4 md:gap-6 overflow-visible"
+          className="flex flex-col items-center gap-4 md:gap-6"
         >
           {/* Original */}
           <GridPlane seedBase={0} size={tileSize} rowY={rowY} rowScale={rowScale} />
