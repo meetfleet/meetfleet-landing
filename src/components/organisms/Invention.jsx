@@ -81,7 +81,7 @@ const InventionScene = () => {
           >
             <a
               href="/sas.pdf"
-              download="Meetfleet-Social-Activation-Score.pdf"
+              download="Meetfleet - Social Activation Score.pdf"
               className="inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[14px] font-light bg-[#0033FF] text-white rounded-[11px] hover:bg-[#0029cc] transition-colors"
             >
               <Download size={16} strokeWidth={1.75} />

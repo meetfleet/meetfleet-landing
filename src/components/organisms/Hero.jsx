@@ -57,7 +57,7 @@ const Hero = () => {
           >
             <a
               href="/sas.pdf"
-              download="Meetfleet-Social-Activation-Score.pdf"
+              download="Meetfleet - Social Activation Score.pdf"
               className="px-[29px] py-[14px] text-[14px] leading-none font-light bg-[#0033FF] text-white rounded-[11px] hover:bg-[#0029cc] transition-colors w-full sm:w-auto text-center"
             >
               Download
