@@ -39,8 +39,12 @@ const IntroVideo = ({ onComplete }) => {
         autoPlay
         muted
         playsInline
+        preload="auto"
         onEnded={handleVideoEnd}
         onError={handleVideoEnd}
+        onLoadedMetadata={(e) => {
+          e.target.play().catch(() => {});
+        }}
         onCanPlay={(e) => {
           e.target.play().catch(() => {});
         }}

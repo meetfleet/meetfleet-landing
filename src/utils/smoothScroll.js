@@ -13,7 +13,16 @@ export const springScrollTo = (target, customConfig = {}) => {
   if (!el) return;
 
   const currentY = window.scrollY || window.pageYOffset;
-  const targetY = el.getBoundingClientRect().top + currentY;
+  const elementTop = el.getBoundingClientRect().top + currentY;
+
+  // Calculate vertical centering offset so target section is centered in viewport
+  const windowHeight = window.innerHeight;
+  const elementHeight = el.offsetHeight;
+  const centeringOffset = elementHeight < windowHeight
+    ? (windowHeight - elementHeight) / 2
+    : 0;
+
+  const targetY = Math.max(0, elementTop - centeringOffset);
 
   // Spring physics configuration — tuned for smooth, fluid Apple-style gliding
   const springConfig = {

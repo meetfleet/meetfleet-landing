@@ -20,7 +20,7 @@ const Message = () => {
   const photoScale = useTransform(scrollYProgress, [0, 1], [1.18, 1.08]);
 
   return (
-    <section id="message" ref={sectionRef} className="w-full bg-white py-16 sm:py-24 lg:py-28 flex items-center">
+    <section id="message" ref={sectionRef} className="w-full min-h-screen bg-white flex items-center justify-center py-12 sm:py-16 md:py-20">
       {/* Apple-style: centered content, symmetric responsive side margins */}
       <div className="mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.45fr] items-stretch gap-12 lg:gap-16">
