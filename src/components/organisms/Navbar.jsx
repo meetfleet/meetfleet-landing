@@ -5,7 +5,7 @@ import logo from '../../assets/logo.svg';
 
 const NAV_LINKS = [
   { name: 'OS', href: '#hero' },
-  { name: 'Message', href: '#message' },
+  { name: 'Manifesto', href: '#message' },
   { name: 'SAS Score', href: '#sas' },
   { name: 'Ascience', href: '#invention' },
   { name: 'Technology', href: '#technology' },
