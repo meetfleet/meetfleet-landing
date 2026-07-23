@@ -14,7 +14,7 @@ const reveal = (delay = 0) => ({
 
 const Download = () => {
   return (
-    <section className="w-full bg-white px-3 sm:px-5 md:p-6">
+    <section id="download" className="w-full bg-white px-3 sm:px-5 md:p-6">
       {/* Extra bottom padding so the overhanging devices aren't clipped */}
       <div className="mx-auto max-w-6xl pt-6 pb-[17vw] sm:pb-[14vw] md:pb-[12vw]">
         {/* Card — rounded white surface, soft shadow. NOT overflow-hidden,

@@ -20,15 +20,15 @@ const useReveal = (progress, start, end) => {
 const MessageScene = () => {
   const progress = useStickyScene();
 
-  // Text cascade — each element reveals in its own window as you scroll in.
-  const heading = useReveal(progress, 0.06, 0.22);
-  const para1 = useReveal(progress, 0.16, 0.34);
-  const para2 = useReveal(progress, 0.26, 0.46);
-  const stampR = useReveal(progress, 0.38, 0.56);
+  // Text cascade — fast, early reveals so nothing lingers blurred.
+  const heading = useReveal(progress, 0.02, 0.12);
+  const para1 = useReveal(progress, 0.06, 0.16);
+  const para2 = useReveal(progress, 0.1, 0.2);
+  const stampR = useReveal(progress, 0.14, 0.24);
 
-  // Photo panel: reveals, then holds while the photo parallaxes through it.
-  const panel = useReveal(progress, 0.1, 0.3);
-  const panelScale = useTransform(progress, [0.1, 0.35], [0.94, 1]);
+  // Photo panel: reveals early, then holds while the photo parallaxes through it.
+  const panel = useReveal(progress, 0.04, 0.16);
+  const panelScale = useTransform(progress, [0.04, 0.2], [0.94, 1]);
 
   // Real parallax: the photo travels over the scene, but the drift must stay
   // within the scale's overflow slack (≈(scale-1)/2 per edge) so no white gap
@@ -37,7 +37,7 @@ const MessageScene = () => {
   const photoScale = useTransform(progress, [0, 1], [1.28, 1.16]);
 
   return (
-    <section className="w-full bg-white py-20 lg:py-0 lg:h-full lg:flex lg:items-center">
+    <section className="w-full bg-white py-10 lg:py-0 lg:h-full lg:flex lg:items-center">
       {/* Apple-style: centered content, symmetric responsive side margins */}
       <div className="mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.45fr] items-stretch gap-12 lg:gap-16">
@@ -128,7 +128,7 @@ const MessageScene = () => {
 };
 
 const Message = () => (
-  <StickyScene trackVh={220}>
+  <StickyScene trackVh={140}>
     <MessageScene />
   </StickyScene>
 );

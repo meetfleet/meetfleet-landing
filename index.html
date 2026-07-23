@@ -11,11 +11,27 @@
     <meta name="theme-color" content="#ffffff" />
     <link rel="canonical" href="https://meetfleet.org/" />
 
-    <!-- Icons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+    <!-- Icons (favicon.png for Dark mode, fav.png for Light mode) -->
+    <link rel="icon" id="favicon" type="image/png" href="/fav.png" />
+    <link rel="icon" type="image/png" href="/fav.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" href="/favicon.png" media="(prefers-color-scheme: dark)" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="mask-icon" href="/favicon.svg" color="#000000" />
+
+    <script>
+      (function() {
+        function setFavicon() {
+          var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var link = document.getElementById('favicon');
+          if (link) {
+            link.href = isDark ? '/favicon.png' : '/fav.png';
+          }
+        }
+        setFavicon();
+        if (window.matchMedia) {
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+        }
+      })();
+    </script>
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

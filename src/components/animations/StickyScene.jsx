@@ -47,9 +47,9 @@ const StickyScene = ({ children, trackVh = 200, className = '', stiffness = 120,
 
   return (
     <div ref={trackRef} style={{ height: `${trackVh}vh` }} className={`relative ${className}`}>
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-0 h-screen w-full overflow-visible">
         <StickySceneContext.Provider value={progress}>
-          <motion.div className="h-full w-full">{children}</motion.div>
+          <motion.div className="h-full w-full flex items-center justify-center">{children}</motion.div>
         </StickySceneContext.Provider>
       </div>
     </div>

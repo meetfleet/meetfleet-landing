@@ -26,8 +26,8 @@ const Block = ({ title, children, align = 'left', delay }) => (
 
 const Ecosystem = () => {
   return (
-    <section className="w-full bg-white">
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 py-24 md:py-32">
+    <section id="ecosystem" className="w-full bg-white">
+      <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 pt-0 pb-24 md:py-32">
         {/* 3-column grid on desktop: text | diagram | text.
             Collapses to diagram-on-top, stacked blocks on mobile. */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] items-center gap-x-12 gap-y-16 md:gap-y-24">

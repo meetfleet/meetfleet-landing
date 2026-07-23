@@ -5,6 +5,7 @@ import logo from '../../assets/logo.svg';
 const Hero = () => {
   return (
     <motion.section
+      id="hero"
       className="min-h-screen w-full bg-white flex items-center justify-center p-3 sm:p-5 md:p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -54,26 +55,35 @@ const Hero = () => {
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
           >
-            <button className="px-[29px] py-[14px] text-[14px] leading-none font-light bg-[#0033FF] text-white rounded-[11px] hover:bg-[#0029cc] transition-colors w-full sm:w-auto">
+            <a
+              href="/sas.pdf"
+              download="Meetfleet-Social-Activation-Score.pdf"
+              className="px-[29px] py-[14px] text-[14px] leading-none font-light bg-[#0033FF] text-white rounded-[11px] hover:bg-[#0029cc] transition-colors w-full sm:w-auto text-center"
+            >
               Download
-            </button>
-            <button className="px-[29px] py-[14px] text-[14px] leading-none font-light bg-white text-black/50 rounded-[11px] hover:text-black/70 transition-colors shadow-[0_3px_16px_rgba(0,0,0,0.1)] w-full sm:w-auto">
-              Learn More
-            </button>
+            </a>
+            <a
+              href="https://meetfleet.app/support/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-[29px] py-[14px] text-[14px] leading-none font-light bg-white text-black/70 rounded-[11px] border border-black/15 hover:bg-black/[0.03] transition-colors shadow-[0_3px_16px_rgba(0,0,0,0.06)] w-full sm:w-auto text-center"
+            >
+              Peer Review
+            </a>
           </motion.div>
         </div>
 
-        {/* Image — spec aspect 838.56 x 595.09 (≈1.409:1) */}
+        {/* Image — zoomed in */}
         <motion.div
-          className="w-full max-w-2xl mt-auto"
-          initial={{ opacity: 0, filter: 'blur(12px)' }}
-          animate={{ opacity: 1, filter: 'blur(0px)' }}
+          className="w-full max-w-4xl lg:max-w-5xl mt-auto flex justify-center overflow-visible"
+          initial={{ opacity: 0, filter: 'blur(12px)', scale: 0.95 }}
+          animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
           transition={{ duration: 0.7, ease: 'easeOut', delay: 0.5 }}
         >
           <img
             src={heroImage}
             alt="Meetfleet App Interface"
-            className="w-full h-auto object-contain drop-shadow-2xl origin-bottom"
+            className="w-full h-auto object-contain drop-shadow-2xl origin-bottom scale-110 sm:scale-125 md:scale-135 translate-y-3 sm:translate-y-6"
           />
         </motion.div>
 

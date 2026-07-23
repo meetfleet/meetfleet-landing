@@ -1,7 +1,13 @@
+import { lazy, Suspense } from 'react';
 import { useTransform, motion } from 'framer-motion';
-import { Download, ArrowUpRight, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import { Download, ArrowUpRight } from 'lucide-react';
 import StickyScene from '../animations/StickyScene';
 import { useStickyScene } from '../animations/stickySceneContext';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
+
+// Lazy-load the PDF viewer so the heavy PDF.js bundle (~450kB gzip) is only
+// fetched when this section renders — keeps the initial page load lean.
+const PdfViewer = lazy(() => import('../media/PdfViewer'));
 
 const pdf = '/sas.pdf';
 
@@ -15,19 +21,22 @@ const useReveal = (progress, start, end, rise = 40) => {
 
 const InventionScene = () => {
   const progress = useStickyScene();
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
   // Left column — staggered text cascade.
-  const tag = useReveal(progress, 0.04, 0.18, 24);
-  const heading = useReveal(progress, 0.1, 0.26);
-  const body = useReveal(progress, 0.18, 0.36);
-  const buttons = useReveal(progress, 0.28, 0.46, 28);
+  const tag = useReveal(progress, 0.02, 0.1, 24);
+  const heading = useReveal(progress, 0.05, 0.14);
+  const body = useReveal(progress, 0.08, 0.18);
+  const buttons = useReveal(progress, 0.12, 0.22, 28);
 
-  // Right viewer — slides in from the right edge (side parallax) then drifts.
-  const viewerOpacity = useTransform(progress, [0.05, 0.28], [0, 1]);
-  const viewerX = useTransform(progress, [0, 1], ['22%', '-4%']);
+  // Right viewer — appears early, slides in from the right (subtle drift).
+  const viewerOpacity = useTransform(progress, [0.02, 0.14], [0, 1]);
+  const viewerX = useTransform(progress, [0, 1], ['14%', '-4%']);
+
+  const x = isDesktop ? viewerX : '0%';
 
   return (
-    <section className="w-full bg-white overflow-hidden py-20 lg:py-0 lg:h-full lg:flex lg:items-center">
+    <section id="invention" className="w-full bg-white overflow-x-clip overflow-y-visible py-16 sm:py-24 lg:py-0 lg:h-full lg:flex lg:items-center">
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-0">
 
         {/* Left — text column (padded, Apple-style symmetric margins) */}
@@ -70,67 +79,39 @@ const InventionScene = () => {
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
             style={buttons}
           >
-            <button
-              type="button"
+            <a
+              href="/sas.pdf"
+              download="Meetfleet-Social-Activation-Score.pdf"
               className="inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[14px] font-light bg-[#0033FF] text-white rounded-[11px] hover:bg-[#0029cc] transition-colors"
             >
               <Download size={16} strokeWidth={1.75} />
               Research Paper
-            </button>
-            <button
-              type="button"
+            </a>
+            <a
+              href="https://meetfleet.app/support/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[14px] font-light bg-white text-black rounded-[11px] border border-black/15 hover:bg-black/[0.03] transition-colors"
             >
               <ArrowUpRight size={16} strokeWidth={1.75} />
               Peer Review
-            </button>
+            </a>
           </motion.div>
         </div>
 
-        {/* Right — Apple-style shadow container, flush to the right edge.
-            Left corners rounded, right corners square (no gap with viewport edge). */}
+        {/* Right — Apple-style shadow container, centered on mobile, flush to the right edge on desktop. */}
         <motion.div
           className="relative w-full lg:justify-self-end will-change-transform"
-          style={{ opacity: viewerOpacity, x: viewerX }}
+          style={{ opacity: viewerOpacity, x }}
         >
-          <div className="relative ml-auto w-full max-w-[640px] bg-[#f6f7f9] rounded-l-[36px] rounded-r-none shadow-[0_20px_80px_rgba(0,0,0,0.14)] p-6 sm:p-8 lg:p-10">
+          <div className="relative mx-auto lg:ml-auto lg:mr-0 w-[calc(100%-2rem)] sm:w-full max-w-[640px] bg-[#f6f7f9] rounded-[24px] sm:rounded-[36px] lg:rounded-l-[36px] lg:rounded-r-none shadow-[0_-20px_80px_rgba(0,0,0,0.14)] p-6 sm:p-8 lg:p-10">
 
-            {/* Glassmorphism PDF viewer — native chrome fully hidden */}
-            <div className="relative rounded-[20px] overflow-hidden border border-white/60 bg-white/40 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.10)]">
-              {/* Slightly oversized + clipped so any residual scrollbar/toolbar is cropped away */}
-              <div className="relative w-full h-[420px] md:h-[520px] overflow-hidden">
-                <iframe
-                  title="SAS — Technical White Paper"
-                  src={`${pdf}#toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0&view=FitH`}
-                  scrolling="no"
-                  className="block bg-white border-0 absolute -top-2 -left-2 w-[calc(100%+1.1rem)] h-[calc(100%+1rem)]"
-                />
-              </div>
-
-              {/* Three floating glass buttons — no bar/pill */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center gap-3">
-                <button
-                  type="button"
-                  aria-label="Previous page"
-                  className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/70 bg-white/50 backdrop-blur-xl text-black/70 shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:bg-white/80 transition-colors"
-                >
-                  <ChevronLeft size={18} strokeWidth={1.75} />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Next page"
-                  className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/70 bg-white/50 backdrop-blur-xl text-black/70 shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:bg-white/80 transition-colors"
-                >
-                  <ChevronRight size={18} strokeWidth={1.75} />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Fullscreen"
-                  className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/70 bg-white/50 backdrop-blur-xl text-black/70 shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:bg-white/80 transition-colors"
-                >
-                  <Maximize2 size={16} strokeWidth={1.75} />
-                </button>
-              </div>
+            {/* Glassmorphism PDF viewer — rendered via PDF.js (no native
+                browser toolbar, scrollbar, or side gutters). */}
+            <div className="relative rounded-[20px] overflow-hidden border border-white/60 bg-white shadow-[0_-10px_40px_rgba(0,0,0,0.10)]">
+              <Suspense fallback={<div className="w-full h-[560px] md:h-[680px] bg-white" />}>
+                <PdfViewer file={pdf} className="w-full" />
+              </Suspense>
             </div>
           </div>
         </motion.div>
@@ -141,7 +122,7 @@ const InventionScene = () => {
 };
 
 const Invention = () => (
-  <StickyScene trackVh={220}>
+  <StickyScene trackVh={140}>
     <InventionScene />
   </StickyScene>
 );

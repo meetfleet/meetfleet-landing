@@ -1,6 +1,6 @@
-import { useTransform, useSpring, motion } from 'framer-motion';
-import StickyScene from '../animations/StickyScene';
-import { useStickyScene } from '../animations/stickySceneContext';
+import { useRef } from 'react';
+import { useTransform, useSpring, useScroll, motion } from 'framer-motion';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 /* --------------------------------------------------------------------------
  * GradientGrid — a 3D-tilted grid of gradient "app icon" tiles.
@@ -59,7 +59,7 @@ const GradientTile = ({ seed, size = 150 }) => {
     ry: size * (0.22 + rand() * 0.32),
     rot: rand() * 360,
     color: BLOB_COLORS[Math.floor(rand() * BLOB_COLORS.length)],
-    opacity: 0.55 + rand() * 0.45,
+    opacity: 0.7 + rand() * 0.3,
   }));
   const overlay = OVERLAYS[seed % OVERLAYS.length];
   const base = BASE[seed % BASE.length];
@@ -68,9 +68,21 @@ const GradientTile = ({ seed, size = 150 }) => {
   return (
     <div
       className="relative shrink-0 overflow-hidden"
-      style={{ width: size, height: size, borderRadius: radius, backgroundImage: base }}
+      style={{
+        width: size,
+        height: size,
+        borderRadius: radius,
+        backgroundImage: base,
+        // Push saturation/brightness so the tiles read vivid, not washed out.
+        filter: 'saturate(1.6) brightness(1.06)',
+        // Perf: a tile's internals (gradients + blurred blobs) are STATIC.
+        // `contain: paint` lets the browser rasterize each tile once and cache
+        // it — the pricey SVG blurs never re-render during scroll.
+        contain: 'layout paint style',
+        transform: 'translateZ(0)',
+      }}
     >
-      {/* Blurred hue blobs */}
+      {/* Blurred hue blobs — borrow hue from the vivid palette */}
       <svg
         className="absolute inset-0 block"
         width={size}
@@ -91,6 +103,28 @@ const GradientTile = ({ seed, size = 150 }) => {
           />
         ))}
       </svg>
+      {/* Second blob layer with 'color' blend — injects real chroma
+          (not just hue), so the splotches stay bright and saturated. */}
+      <svg
+        className="absolute inset-0 block"
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        style={{ mixBlendMode: 'color', filter: 'blur(16px)', opacity: 0.65 }}
+      >
+        {blobs.map((b, i) => (
+          <ellipse
+            key={`c${i}`}
+            cx={b.cx}
+            cy={b.cy}
+            rx={b.rx * 0.9}
+            ry={b.ry * 0.9}
+            fill={b.color}
+            fillOpacity={b.opacity}
+            transform={`rotate(${b.rot} ${b.cx} ${b.cy})`}
+          />
+        ))}
+      </svg>
       {/* Vivid overlay — this drives the saturated, varied per-tile look */}
       <div
         className="absolute inset-0"
@@ -103,56 +137,88 @@ const GradientTile = ({ seed, size = 150 }) => {
 const COLS = 10;
 const ROWS = 3;
 
+// One ROWS×COLS plane of tiles. `seedBase` offsets the seeds so a second
+// (mirrored) plane never looks like a duplicate. `rowY`/`rowScale` are shared
+// motion values driving the per-row parallax/depth.
+const GridPlane = ({ seedBase, size, rowY, rowScale }) => (
+  <>
+    {Array.from({ length: ROWS }, (_, row) => (
+      <motion.div
+        key={row}
+        style={{ y: rowY[row], scale: rowScale[row], transformStyle: 'preserve-3d' }}
+        className="flex gap-4 md:gap-6 will-change-transform"
+      >
+        {Array.from({ length: COLS }, (_, col) => (
+          <GradientTile key={col} seed={seedBase + row * COLS + col} size={size} />
+        ))}
+      </motion.div>
+    ))}
+  </>
+);
+
 const GradientGridScene = () => {
-  const raw = useStickyScene();
+  const sectionRef = useRef(null);
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
 
-  // A second, softer spring on top of the scene progress — extra weight and
-  // glide so the plane eases rather than tracking scroll 1:1. This is what
-  // makes the motion feel classy instead of mechanical.
-  const progress = useSpring(raw, { stiffness: 60, damping: 26, mass: 1.1, restDelta: 0.0004 });
+  // Self-driven scroll progress across the whole section — works on BOTH web
+  // and mobile (no frozen fallback), so the tiles animate intensely everywhere.
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+  const progress = useSpring(scrollYProgress, { stiffness: 55, damping: 24, mass: 1.05, restDelta: 0.0004 });
 
-  // Reveal — long, soft fade + un-blur.
-  const opacity = useTransform(progress, [0.03, 0.28], [0, 1]);
-  const blur = useTransform(progress, [0.03, 0.32], ['blur(26px)', 'blur(0px)']);
+  // Reveal in, then HOLD — no fade/blur-out on exit; the tiles stay present.
+  const opacity = useTransform(progress, [0.08, 0.32], [0, 1]);
+  const blur = useTransform(progress, [0.08, 0.3], ['blur(24px)', 'blur(0px)']);
 
-  // Cinematic tilt: sweeps from a steep raked angle to a gentle rest, easing
-  // through intermediate keyframes so it decelerates into place.
-  const rotX = useTransform(progress, [0, 0.55, 1], [52, 30, 22]);
-  const rotY = useTransform(progress, [0, 0.55, 1], [-6, -22, -29]);
-  const rotZ = useTransform(progress, [0, 1], [7, 2]);
+  // Intense tilt: steep → flat-ish → steep the other way as it passes through.
+  const rotX = useTransform(progress, [0, 0.5, 1], [58, 20, 58]);
+  const rotY = useTransform(progress, [0, 0.5, 1], [-2, -30, -58]);
+  const rotZ = useTransform(progress, [0, 0.5, 1], [9, 2, -6]);
 
-  // Zoomed-out float: starts small & far (shows the most tiles), drifts up and
-  // eases toward full scale while lifting forward in Z.
-  const ty = useTransform(progress, [0, 1], ['12%', '-9%']);
-  const scale = useTransform(progress, [0, 0.5, 1], [0.72, 0.9, 0.98]);
-  const tz = useTransform(progress, [0, 1], [-280, 60]);
+  // Big vertical travel + a deep Z sweep for dramatic perspective.
+  const ty = useTransform(progress, [0, 1], ['22%', '-22%']);
+  const scale = useTransform(progress, [0, 0.5, 1], [0.7, 1, 0.7]);
+  const tz = useTransform(progress, [0, 0.5, 1], [-360, 80, -360]);
 
-  // Per-row parallax — stronger, so rows visibly cascade at different depths.
+  // Per-row parallax — strong, rows cascade at different depths.
   const rowY = [
-    useTransform(progress, [0, 1], ['6%', '-6%']),
+    useTransform(progress, [0, 1], ['9%', '-9%']),
     useTransform(progress, [0, 1], ['0%', '0%']),
-    useTransform(progress, [0, 1], ['-6%', '6%']),
+    useTransform(progress, [0, 1], ['-9%', '9%']),
   ];
-  // Subtle per-row scale so the middle row sits slightly forward — more depth.
   const rowScale = [
-    useTransform(progress, [0, 1], [0.97, 1]),
-    useTransform(progress, [0, 1], [1.0, 1.04]),
-    useTransform(progress, [0, 1], [0.97, 1]),
+    useTransform(progress, [0, 1], [0.96, 1]),
+    useTransform(progress, [0, 1], [1.0, 1.05]),
+    useTransform(progress, [0, 1], [0.96, 1]),
   ];
 
-  // Glass card — reveals a touch after the grid, settling gently into place.
-  const cardOpacity = useTransform(progress, [0.18, 0.4], [0, 1]);
-  const cardY = useTransform(progress, [0.18, 0.5], [28, 0]);
-  const cardScale = useTransform(progress, [0.18, 0.5], [0.96, 1]);
+  // Glass card — reveals as the grid settles near center, then holds (no exit fade).
+  const cardOpacity = useTransform(progress, [0.3, 0.44], [0, 1]);
+  const cardY = useTransform(progress, [0.3, 0.5], [28, 0]);
+  const cardScale = useTransform(progress, [0.3, 0.5], [0.96, 1]);
+
+  const tileSize = isDesktop ? 96 : 128; // zoomed IN on mobile
 
   return (
-    <section className="relative w-full bg-white overflow-hidden py-20 lg:py-0 lg:h-full lg:flex lg:items-center lg:justify-center">
-      {/* Perspective stage */}
+    <section
+      id="technology"
+      ref={sectionRef}
+      className="relative w-full min-h-screen py-16 lg:py-0 lg:h-screen bg-white overflow-visible flex items-center justify-center"
+    >
+      {/* Perspective stage — overflow-visible & no paint containment so 3D tiles float uncropped */}
       <motion.div
-        style={{ opacity, filter: blur, perspective: 1400, perspectiveOrigin: '50% 40%' }}
-        className="w-full flex items-center justify-center will-change-transform"
+        style={{
+          opacity,
+          filter: blur,
+          perspective: 1400,
+          perspectiveOrigin: '50% 50%',
+        }}
+        className="w-full flex items-center justify-center will-change-transform overflow-visible"
       >
-        {/* Tilted plane — the 3D "stretched float" look */}
+        {/* Tilted plane: the original grid + a vertically-mirrored duplicate
+            below it (offset seeds so tiles never look copied), centered as one. */}
         <motion.div
           style={{
             rotateX: rotX,
@@ -163,26 +229,42 @@ const GradientGridScene = () => {
             y: ty,
             z: tz,
             transformStyle: 'preserve-3d',
+            willChange: 'transform',
+            backfaceVisibility: 'hidden',
           }}
-          className="flex flex-col gap-4 md:gap-6 will-change-transform"
+          className="flex flex-col items-center gap-4 md:gap-6 overflow-visible"
         >
-          {Array.from({ length: ROWS }, (_, row) => (
-            <motion.div
-              key={row}
-              style={{ y: rowY[row], scale: rowScale[row], transformStyle: 'preserve-3d' }}
-              className="flex gap-4 md:gap-6 will-change-transform"
-            >
-              {Array.from({ length: COLS }, (_, col) => (
-                <GradientTile key={col} seed={row * COLS + col} size={96} />
-              ))}
-            </motion.div>
-          ))}
+          {/* Original */}
+          <GridPlane seedBase={0} size={tileSize} rowY={rowY} rowScale={rowScale} />
+          {/* Inverted duplicate — mirrored vertically, fresh seeds */}
+          <div style={{ transform: 'scaleY(-1)' }} className="flex flex-col items-center gap-4 md:gap-6">
+            <GridPlane seedBase={ROWS * COLS} size={tileSize} rowY={rowY} rowScale={rowScale} />
+          </div>
         </motion.div>
       </motion.div>
 
-      {/* Frosted glass card — centered overlay above the tilted grid.
-          SVG spec: 662.5×401, rx 94, white @ 0.7, 1px white border,
-          backdrop-blur 50px, soft 0 4px 250px shadow. */}
+      {/* Edge blur — progressively blur + fade the outer columns on the left
+          and right so the tile field dissolves at its horizontal extremes.
+          backdrop-blur blurs the tiles behind; the mask ramps it from strong
+          at the edge to none by ~28% in. Desktop only. */}
+      <div
+        aria-hidden
+        className="hidden lg:block absolute inset-y-0 left-0 w-[28%] z-[5] pointer-events-none backdrop-blur-[10px]"
+        style={{
+          WebkitMaskImage: 'linear-gradient(to right, black, transparent)',
+          maskImage: 'linear-gradient(to right, black, transparent)',
+        }}
+      />
+      <div
+        aria-hidden
+        className="hidden lg:block absolute inset-y-0 right-0 w-[28%] z-[5] pointer-events-none backdrop-blur-[10px]"
+        style={{
+          WebkitMaskImage: 'linear-gradient(to left, black, transparent)',
+          maskImage: 'linear-gradient(to left, black, transparent)',
+        }}
+      />
+
+      {/* Frosted glass card — centered overlay, intense white surface. */}
       <motion.div
         style={{ opacity: cardOpacity, y: cardY, scale: cardScale }}
         className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none px-6 will-change-transform"
@@ -211,10 +293,6 @@ const GradientGridScene = () => {
   );
 };
 
-const GradientGrid = () => (
-  <StickyScene trackVh={200}>
-    <GradientGridScene />
-  </StickyScene>
-);
+const GradientGrid = () => <GradientGridScene />;
 
 export default GradientGrid;
