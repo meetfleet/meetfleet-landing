@@ -6,13 +6,13 @@ const Hero = () => {
   return (
     <motion.section
       id="hero"
-      className="min-h-screen w-full bg-white flex items-center justify-center p-3 sm:p-5 md:p-6"
+      className="w-full min-h-screen bg-white flex items-center justify-center p-4 sm:p-6 md:p-8 pt-6 pb-16 sm:pb-20 md:pb-24"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      {/* Card — SVG: rounded white surface, soft shadow, fills the frame */}
-      <div className="w-full h-[calc(100vh-1.5rem)] sm:h-[calc(100vh-2.5rem)] md:h-[calc(100vh-3rem)] min-h-[720px] bg-white rounded-[24px] md:rounded-[35px] shadow-[0_4px_100px_rgba(0,0,0,0.1)] flex flex-col items-center gap-8 overflow-hidden relative p-8 sm:p-12 md:p-14">
+      {/* Card — rounded white surface, soft uncropped shadow */}
+      <div className="w-full max-w-7xl min-h-[660px] lg:h-[calc(100vh-4rem)] bg-white rounded-[24px] md:rounded-[35px] shadow-[0_12px_60px_rgba(0,0,0,0.08)] flex flex-col items-center gap-8 overflow-hidden relative p-6 sm:p-12 md:p-14">
 
         {/* Content group — centered in the available vertical space */}
         <div className="flex-grow flex flex-col items-center justify-center gap-4 sm:gap-8 w-full max-w-2xl">
