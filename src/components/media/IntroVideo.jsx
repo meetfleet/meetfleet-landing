@@ -10,9 +10,6 @@ const IntroVideo = ({ onComplete }) => {
     ? '/intro-desktop-poster.webp'
     : '/intro-mobile-poster.webp';
 
-  // The poster (an exact copy of the video's first frame) paints instantly and
-  // stays under the video until real frames are on screen — so there is never a
-  // black gap, and the handoff to video is seamless because the pixels match.
   const [playing, setPlaying] = useState(false);
 
   const handleVideoEnd = () => {
@@ -20,18 +17,28 @@ const IntroVideo = ({ onComplete }) => {
   };
 
   useEffect(() => {
-    // Safety fallback if the video never plays or ends (20s margin).
+    const video = videoRef.current;
+    if (video) {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // If autoplay fails on low-power mobile, complete gracefully
+          handleVideoEnd();
+        });
+      }
+    }
+
+    // Safety fallback if video stalls or takes too long (16s max)
     const timeout = setTimeout(() => {
       if (onComplete) onComplete();
-    }, 20000);
+    }, 16000);
+
     return () => clearTimeout(timeout);
   }, [onComplete]);
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
-      // Poster as the background paint: the first frame is on screen the very
-      // moment the intro mounts — no black flash, no glitch ramp.
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black transform-gpu"
       style={{
         backgroundColor: '#000',
         backgroundImage: `url(${posterSrc})`,
@@ -40,22 +47,26 @@ const IntroVideo = ({ onComplete }) => {
         backgroundRepeat: 'no-repeat',
       }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1, ease: 'easeInOut' }}
+      transition={{ duration: 0.8, ease: 'easeInOut' }}
     >
       <video
         ref={videoRef}
         src={videoSrc}
         poster={posterSrc}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover transform-gpu"
         style={{
-          // Reveal only once real frames are decoding; until then the identical
-          // poster background shows through, so the transition is invisible.
           opacity: playing ? 1 : 0,
-          transition: 'opacity 120ms linear',
+          transition: 'opacity 150ms linear',
+          willChange: 'opacity',
         }}
         autoPlay
         muted
         playsInline
+        webkit-playsinline="true"
+        x5-playsinline="true"
+        x5-video-player-type="h5"
+        disablePictureInPicture
+        disableRemotePlayback
         preload="auto"
         onEnded={handleVideoEnd}
         onError={handleVideoEnd}

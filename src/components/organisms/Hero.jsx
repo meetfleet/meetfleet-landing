@@ -44,7 +44,7 @@ const Hero = () => {
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.3 }}
           >
-            Meetfleet is hyper-local coordination for the spontaneous era—a social OS engineered to connect you instantly with nearby real-time activities. Whether you are booking golf foursomes, going on romantic dinner dates, organizing group shopping runs, hitting the ski slopes, riding countryside trails, or catching beach waves, Meetfleet empowers instant pokes, real-time activity broadcasting, and seamless spontaneous plans.
+            Meetfleet is hyper-local coordination for the spontaneous era, a social OS engineered to connect you instantly with nearby real-time activities. Whether you are booking golf foursomes, going on romantic dinner dates, organizing group shopping runs, hitting the ski slopes, riding countryside trails, or catching beach waves, Meetfleet empowers instant pokes, real-time activity broadcasting, and seamless spontaneous plans.
           </motion.p>
 
           {/* Buttons */}
