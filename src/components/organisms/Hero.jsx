@@ -16,7 +16,7 @@ const Hero = () => {
       <div className="w-full max-w-7xl min-h-[660px] lg:h-[calc(100vh-4rem)] bg-white rounded-[24px] md:rounded-[35px] shadow-[0_12px_60px_rgba(0,0,0,0.08)] flex flex-col items-center gap-8 overflow-hidden relative p-6 sm:p-12 md:p-14">
 
         {/* Content group — centered in the available vertical space */}
-        <div className="flex-grow flex flex-col items-center justify-center gap-4 sm:gap-8 w-full max-w-2xl">
+        <div className="flex-grow flex flex-col items-center justify-center gap-2 sm:gap-4 w-full max-w-2xl">
           {/* Logo */}
           <motion.img
             src={logo}
@@ -39,12 +39,12 @@ const Hero = () => {
 
           {/* Paragraph */}
           <motion.p
-            className="text-base md:text-[17px] text-black/60 text-center leading-[1.4] font-light"
+            className="text-base md:text-[17px] text-black/60 text-center leading-[1.35] font-light"
             initial={{ opacity: 0, filter: 'blur(12px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.3 }}
           >
-            Meetfleet is hyper-local coordination for the spontaneous era, a social OS engineered to connect you instantly with nearby real-time activities. Whether you are booking golf foursomes, going on romantic dinner dates, organizing group shopping runs, hitting the ski slopes, riding countryside trails, or catching beach waves, Meetfleet empowers instant pokes, real-time activity broadcasting, and seamless spontaneous plans.
+            Meetfleet is hyper-local coordination for the spontaneous era—a social OS connecting you instantly with real-time activities around you, from golf foursomes and romantic dates to group shopping, skiing, riding, and beach sessions.
           </motion.p>
 
           {/* Buttons */}
