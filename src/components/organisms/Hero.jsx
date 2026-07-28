@@ -39,14 +39,12 @@ const Hero = () => {
 
           {/* Paragraph */}
           <motion.p
-            className="text-base md:text-[18px] text-black/50 text-center leading-[1.17] font-light"
+            className="text-base md:text-[17px] text-black/60 text-center leading-[1.4] font-light"
             initial={{ opacity: 0, filter: 'blur(12px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.3 }}
           >
-            Meetfleet is an inclusive R&D infrastructure designed to solve loneliness for everyone,
-            from students looking for study partners to neighbors wanting to explore local
-            markets together.
+            Meetfleet is hyper-local coordination for the spontaneous era—a social OS engineered to connect you instantly with nearby real-time activities. Whether you are booking golf foursomes, going on romantic dinner dates, organizing group shopping runs, hitting the ski slopes, riding countryside trails, or catching beach waves, Meetfleet empowers instant pokes, real-time activity broadcasting, and seamless spontaneous plans.
           </motion.p>
 
           {/* Buttons */}

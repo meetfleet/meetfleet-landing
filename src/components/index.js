@@ -11,3 +11,4 @@ export { default as GradientGrid } from './organisms/GradientGrid';
 export { default as Ecosystem } from './organisms/Ecosystem';
 export { default as Download } from './organisms/Download';
 export { default as Footer } from './organisms/Footer';
+export { default as ScrollToTop } from './organisms/ScrollToTop';
