@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import './App.css';
-import { IntroVideo, Navbar, Hero, Message, Sas, Invention, GradientGrid, Ecosystem, Download, Footer, ScrollToTop } from './components';
+import { IntroVideo, Navbar, Hero, Message, Sas, Invention, GradientGrid, Ecosystem, Plans, Download, Footer, ScrollToTop } from './components';
 
 function App() {
   // Only play the intro video on the first entrance of the session.
@@ -29,6 +29,7 @@ function App() {
             <Invention />
             <GradientGrid />
             <Ecosystem />
+            <Plans />
             <Download />
             <Footer />
             <ScrollToTop />
