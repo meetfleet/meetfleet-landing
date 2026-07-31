@@ -13,7 +13,7 @@ const Sas = () => {
   const iconY = useTransform(scrollYProgress, [0, 1], ['-6%', '6%']); // gentle parallax drift
 
   return (
-    <section id="sas" ref={sectionRef} className="w-full min-h-screen bg-white flex items-center justify-center py-12 sm:py-16 md:py-20">
+    <section id="sas" ref={sectionRef} className="w-full min-h-[50vh] bg-white flex items-center justify-center py-10 sm:py-12 md:py-16">
       {/* Apple-style: centered, symmetric responsive side margins */}
       <div className="mx-auto w-full max-w-3xl px-6 sm:px-10 text-center flex flex-col items-center">
 
