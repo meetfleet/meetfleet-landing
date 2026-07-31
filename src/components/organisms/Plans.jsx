@@ -114,7 +114,7 @@ const Card = ({ plan }) => (
 
       {/* Copy & Details */}
       <div className="flex-1 min-w-0 flex flex-col justify-center">
-        <div className="flex items-center justify-between gap-3 flex-wrap sm:flex-nowrap">
+        <div className="flex items-center justify-start gap-3 sm:gap-3.5 flex-wrap sm:flex-nowrap">
           <h3 className={`text-2xl sm:text-3xl md:text-[34px] tracking-tight leading-none ${plan.dark ? 'text-white' : 'text-black'}`}>
             {plan.lead && <span className="font-semibold">{plan.lead} </span>}
             <span className="font-normal">{plan.name}</span>
