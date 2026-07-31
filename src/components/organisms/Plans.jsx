@@ -137,22 +137,37 @@ const Card = ({ plan }) => (
 
 const Plans = () => {
   const trackRef = useRef(null);
-  const titleContainerRef = useRef(null);
+  const titleTextRef = useRef(null);
   const [index, setIndex] = useState(0);
   const [gutter, setGutter] = useState(0);
 
-  // Measure exact left margin of title container so first card aligns precisely with title
+  // Measure exact left margin of the <h2> title text so first card aligns precisely with letter 'C' of "Choose your fleet"
   const updateGutter = useCallback(() => {
-    if (titleContainerRef.current) {
-      const rect = titleContainerRef.current.getBoundingClientRect();
-      setGutter(rect.left);
+    if (titleTextRef.current) {
+      const rect = titleTextRef.current.getBoundingClientRect();
+      if (rect.left > 0) {
+        setGutter(rect.left);
+      }
     }
   }, []);
 
   useEffect(() => {
     updateGutter();
+    // Run after paint to guarantee accurate measurement after framer-motion reveal or custom font load
+    const animId = requestAnimationFrame(updateGutter);
     window.addEventListener('resize', updateGutter);
-    return () => window.removeEventListener('resize', updateGutter);
+
+    let observer;
+    if (titleTextRef.current && window.ResizeObserver) {
+      observer = new ResizeObserver(updateGutter);
+      observer.observe(titleTextRef.current);
+    }
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', updateGutter);
+      if (observer) observer.disconnect();
+    };
   }, [updateGutter]);
 
   const scrollToCard = useCallback((next) => {
@@ -188,9 +203,9 @@ const Plans = () => {
   return (
     <section id="plans" className="w-full bg-white py-20 md:py-28 overflow-hidden">
       {/* Header section with title, description, and left-aligned arrows */}
-      <div ref={titleContainerRef} className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 mb-10 md:mb-14">
+      <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 mb-10 md:mb-14">
         <motion.div {...reveal(0)}>
-          <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-normal tracking-tight text-black leading-[1.1]">
+          <h2 ref={titleTextRef} className="text-[32px] sm:text-[40px] md:text-[48px] font-normal tracking-tight text-black leading-[1.1]">
             Choose your fleet
           </h2>
           <p className="mt-3 max-w-[32rem] text-[14px] sm:text-[15px] font-light leading-relaxed text-black/50">
