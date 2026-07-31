@@ -90,8 +90,8 @@ const Card = ({ plan }) => (
                flex items-center
                transition-all duration-500 ease-out
                ${plan.dark
-                 ? 'bg-black text-white border border-white/10 hover:border-white/20 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)]'
-                 : 'bg-[#F4F4F7] text-black border border-black/[0.05] hover:border-black/[0.12] hover:bg-[#F7F7FA] hover:shadow-[0_20px_50px_-20px_rgba(15,23,42,0.14)]'}`}
+                 ? 'bg-black text-white border border-white/10 hover:border-white/20 sm:hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)]'
+                 : 'bg-[#F4F4F7] text-black border border-black/[0.05] hover:border-black/[0.12] hover:bg-[#F7F7FA] sm:hover:shadow-[0_20px_50px_-20px_rgba(15,23,42,0.14)]'}`}
   >
     {/* Soft top highlight catch-light */}
     <span

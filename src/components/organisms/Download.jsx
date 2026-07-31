@@ -45,7 +45,7 @@ const Download = () => {
             Download the history&rsquo;s first social operating system, works with all your devices
           </motion.p>
 
-          {/* App Store badge — blurred with uncropped overflow padding + Soon pill */}
+          {/* App Store badge — blurred with uncropped overflow padding + Coming Soon pill */}
           <motion.div className="mb-8 md:mb-10 relative inline-flex items-center justify-center p-4 -m-4 overflow-visible" {...reveal(0.15)}>
             <img 
               src={appStore} 
@@ -53,7 +53,7 @@ const Download = () => {
               className="h-[52px] md:h-[58px] w-auto filter blur-[6px] opacity-75 pointer-events-none select-none transition-all" 
             />
             <span className="absolute inline-flex items-center px-3.5 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-black/80 text-white border border-white/20 backdrop-blur-md shadow-lg pointer-events-none">
-              Soon
+              Coming Soon
             </span>
           </motion.div>
 
