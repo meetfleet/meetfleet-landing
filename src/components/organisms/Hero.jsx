@@ -49,7 +49,7 @@ const Hero = () => {
 
           {/* Buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row items-center gap-3 z-10"
+            className="flex flex-col sm:flex-row items-center gap-3 z-10 mt-6 sm:mt-8 md:mt-10"
             initial={{ opacity: 0, filter: 'blur(12px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
