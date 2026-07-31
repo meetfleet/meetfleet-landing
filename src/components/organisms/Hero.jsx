@@ -60,9 +60,12 @@ const Hero = () => {
                 e.preventDefault();
                 springScrollTo('download');
               }}
-              className="px-[29px] py-[14px] text-[14px] leading-none font-light bg-[#0033FF] text-white rounded-[11px] hover:bg-[#0029cc] transition-colors w-full sm:w-auto text-center"
+              className="px-[25px] py-[13px] text-[14px] leading-none font-light bg-[#0033FF] text-white rounded-[11px] hover:bg-[#0029cc] transition-colors w-full sm:w-auto text-center inline-flex items-center justify-center gap-2.5 group shadow-[0_4px_16px_rgba(0,51,255,0.25)]"
             >
-              Download
+              <span>Download</span>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-white/20 text-white border border-white/30 backdrop-blur-md group-hover:bg-white/30 transition-all">
+                Soon
+              </span>
             </a>
             <a
               href="#message"

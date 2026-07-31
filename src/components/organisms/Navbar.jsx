@@ -167,10 +167,13 @@ const Navbar = () => {
             <a
               href="#download"
               onClick={(e) => handleScrollTo(e, '#download')}
-              className="px-6 py-2.5 text-[13.5px] font-medium bg-[#0033FF] text-white rounded-full hover:bg-[#0029cc] hover:shadow-[0_6px_20px_rgba(0,51,255,0.35)] active:scale-95 transition-all flex items-center gap-1.5"
+              className="px-5 py-2 text-[13.5px] font-medium bg-[#0033FF] text-white rounded-full hover:bg-[#0029cc] hover:shadow-[0_6px_20px_rgba(0,51,255,0.35)] active:scale-95 transition-all flex items-center gap-2 group"
             >
               <DownloadIcon size={14} />
-              Download App
+              <span>Download App</span>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-white/20 text-white border border-white/30 backdrop-blur-md group-hover:bg-white/30 transition-all">
+                Soon
+              </span>
             </a>
           </div>
 
@@ -288,10 +291,13 @@ const Navbar = () => {
               <a
                 href="#download"
                 onClick={(e) => handleScrollTo(e, '#download')}
-                className="w-full py-4 px-8 bg-[#0033FF] hover:bg-[#0029cc] text-white text-[15px] font-semibold tracking-wide rounded-[16px] text-center shadow-[0_8px_24px_rgba(0,51,255,0.35)] flex items-center justify-center gap-2 active:scale-95 transition-all"
+                className="w-full py-4 px-8 bg-[#0033FF] hover:bg-[#0029cc] text-white text-[15px] font-semibold tracking-wide rounded-[16px] text-center shadow-[0_8px_24px_rgba(0,51,255,0.35)] flex items-center justify-center gap-2.5 active:scale-95 transition-all group"
               >
                 <DownloadIcon size={18} />
-                Download App
+                <span>Download App</span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-white/20 text-white border border-white/30 backdrop-blur-md">
+                  Soon
+                </span>
               </a>
             </motion.div>
           </motion.div>
