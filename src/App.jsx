@@ -29,7 +29,7 @@ function App() {
             <Invention />
             <GradientGrid />
             <Ecosystem />
-            {/* <Plans /> — hidden for now; re-enable when ready to announce pricing. */}
+            <Plans />
             <Download />
             <Footer />
             <ScrollToTop />
