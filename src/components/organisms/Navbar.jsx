@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { name: 'Ascience', href: '#invention' },
   { name: 'Technology', href: '#technology' },
   { name: 'Ecosystem', href: '#ecosystem' },
+  { name: 'Fleets', href: '#plans' },
 ];
 
 const Navbar = () => {

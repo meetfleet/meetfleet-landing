@@ -42,6 +42,7 @@ const Footer = () => {
               <li><a href="#sas" className="hover:text-[#1d1d1f] transition-colors">Activation Score (SAS)</a></li>
               <li><a href="#invention" className="hover:text-[#1d1d1f] transition-colors">Ascience Technology</a></li>
               <li><a href="#ecosystem" className="hover:text-[#1d1d1f] transition-colors">Compatible Intent</a></li>
+              <li><a href="#plans" className="hover:text-[#1d1d1f] transition-colors">Fleets &amp; Membership</a></li>
               <li><a href="#download" className="hover:text-[#1d1d1f] transition-colors">App Showcase</a></li>
             </ul>
           </div>
