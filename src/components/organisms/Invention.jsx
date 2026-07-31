@@ -31,7 +31,7 @@ const InventionScene = () => {
 
   // Right viewer — appears early, slides in from the right (subtle drift).
   const viewerOpacity = useTransform(progress, [0.02, 0.14], [0, 1]);
-  const viewerX = useTransform(progress, [0, 1], ['14%', '-4%']);
+  const viewerX = useTransform(progress, [0, 0.25, 1], ['14%', '4%', '-4%']);
 
   const x = isDesktop ? viewerX : '0%';
 

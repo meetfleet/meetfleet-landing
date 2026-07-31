@@ -24,7 +24,7 @@ const StickyScene = ({ children, trackVh = 200, className = '', stiffness = 120,
 
   const { scrollYProgress } = useScroll({
     target: trackRef,
-    offset: ['start start', 'end end'],
+    offset: ['start end', 'end end'],
   });
 
   // Smooth the raw scroll progress so motion feels weighty, not twitchy.
