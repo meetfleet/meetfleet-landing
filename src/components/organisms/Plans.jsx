@@ -137,38 +137,15 @@ const Card = ({ plan }) => (
 
 const Plans = () => {
   const trackRef = useRef(null);
-  const titleTextRef = useRef(null);
   const [index, setIndex] = useState(0);
-  const [gutter, setGutter] = useState(0);
 
-  // Measure exact left margin of the <h2> title text so first card aligns precisely with letter 'C' of "Choose your fleet"
-  const updateGutter = useCallback(() => {
-    if (titleTextRef.current) {
-      const rect = titleTextRef.current.getBoundingClientRect();
-      if (rect.left > 0) {
-        setGutter(rect.left);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    updateGutter();
-    // Run after paint to guarantee accurate measurement after framer-motion reveal or custom font load
-    const animId = requestAnimationFrame(updateGutter);
-    window.addEventListener('resize', updateGutter);
-
-    let observer;
-    if (titleTextRef.current && window.ResizeObserver) {
-      observer = new ResizeObserver(updateGutter);
-      observer.observe(titleTextRef.current);
-    }
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', updateGutter);
-      if (observer) observer.disconnect();
-    };
-  }, [updateGutter]);
+  // Read the track's own computed paddingLeft — always accurate because it's
+  // set via responsive Tailwind classes that mirror the title container.
+  const getTrackPadding = () => {
+    const track = trackRef.current;
+    if (!track) return 0;
+    return parseFloat(getComputedStyle(track).paddingLeft) || 0;
+  };
 
   const scrollToCard = useCallback((next) => {
     const track = trackRef.current;
@@ -176,36 +153,38 @@ const Plans = () => {
     const clamped = Math.max(0, Math.min(next, PLANS.length - 1));
     const card = track.children[clamped];
     if (card) {
-      const targetLeft = card.offsetLeft - gutter;
-      track.scrollTo({ left: targetLeft, behavior: 'smooth' });
+      const pad = getTrackPadding();
+      // Scroll so the card's left edge sits exactly at the track's paddingLeft
+      track.scrollTo({ left: card.offsetLeft - pad, behavior: 'smooth' });
     }
     setIndex(clamped);
-  }, [gutter]);
+  }, []);
 
   const onScroll = useCallback(() => {
     const track = trackRef.current;
     if (!track) return;
     const cards = Array.from(track.children);
-    const centre = track.scrollLeft + gutter + (cards[0]?.offsetWidth || 0) / 2;
+    const pad = getTrackPadding();
+    const anchor = track.scrollLeft + pad + (cards[0]?.offsetWidth || 0) / 2;
 
     let nearest = { d: Infinity, i: 0 };
     cards.forEach((card, i) => {
       const cardCentre = card.offsetLeft + card.offsetWidth / 2;
-      const d = Math.abs(cardCentre - centre);
+      const d = Math.abs(cardCentre - anchor);
       if (d < nearest.d) nearest = { d, i };
     });
 
     setIndex(nearest.i);
-  }, [gutter]);
+  }, []);
 
   useEffect(() => { onScroll(); }, [onScroll]);
 
   return (
     <section id="plans" className="w-full bg-white py-20 md:py-28 overflow-hidden">
-      {/* Header section with title, description, and left-aligned arrows */}
+      {/* Header — uses mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 */}
       <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 mb-10 md:mb-14">
         <motion.div {...reveal(0)}>
-          <h2 ref={titleTextRef} className="text-[32px] sm:text-[40px] md:text-[48px] font-normal tracking-tight text-black leading-[1.1]">
+          <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-normal tracking-tight text-black leading-[1.1]">
             Choose your fleet
           </h2>
           <p className="mt-3 max-w-[32rem] text-[14px] sm:text-[15px] font-light leading-relaxed text-black/50">
@@ -221,17 +200,18 @@ const Plans = () => {
         </motion.div>
       </div>
 
-      {/* Full-bleed scroll track with exact gutter padding matching the title */}
+      {/* Scroll track — paddingLeft uses the exact same responsive values as
+          the title container so the first card lines up with "Choose your fleet".
+          On wide screens (≥ max-w-6xl) the lg value is overridden with a calc
+          that adds the centering margin. Cards scroll uncropped past both edges. */}
       <motion.div {...reveal(0.15)}>
         <div
           ref={trackRef}
           onScroll={onScroll}
           className="flex gap-5 sm:gap-6 overflow-x-auto snap-x snap-mandatory pb-4
+                     pl-6 sm:pl-10 lg:pl-[max(4rem,calc((100vw-72rem)/2+4rem))]
+                     pr-6 sm:pr-10 lg:pr-[max(4rem,calc((100vw-72rem)/2+4rem))]
                      [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          style={{
-            paddingLeft: gutter > 0 ? `${gutter}px` : 'max(1.5rem, calc((100vw - 72rem) / 2 + 4rem))',
-            paddingRight: gutter > 0 ? `${gutter}px` : 'max(1.5rem, calc((100vw - 72rem) / 2 + 4rem))',
-          }}
         >
           {PLANS.map((plan) => (
             <Card key={plan.id} plan={plan} />
