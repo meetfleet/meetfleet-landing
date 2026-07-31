@@ -5,7 +5,8 @@ import { motion } from 'framer-motion';
  * Plans carousel.
  *
  * Redesigned with single round 3D art elements, sleek card aesthetics,
- * left-aligned controls, and seamless full-bleed scrolling.
+ * left-aligned controls, increased card height, prominent taglines,
+ * and seamless full-bleed scrolling with pre-margin alignment.
  */
 
 const reveal = (delay = 0) => ({
@@ -84,7 +85,9 @@ const Arrow = ({ dir, disabled, onClick }) => (
 const Card = ({ plan }) => (
   <article
     className={`group relative shrink-0 snap-start w-[88vw] sm:w-[500px] md:w-[540px] lg:w-[580px]
-               rounded-[32px] sm:rounded-[36px] p-6 sm:p-8 md:p-9
+               rounded-[34px] sm:rounded-[40px] py-9 sm:py-11 md:py-12 px-7 sm:px-9 md:px-10
+               min-h-[240px] sm:min-h-[270px] md:min-h-[290px]
+               flex items-center
                transition-all duration-500 ease-out
                ${plan.dark
                  ? 'bg-black text-white border border-white/10 hover:border-white/20 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)]'
@@ -93,14 +96,14 @@ const Card = ({ plan }) => (
     {/* Soft top highlight catch-light */}
     <span
       aria-hidden
-      className={`pointer-events-none absolute inset-x-8 top-0 z-20 h-px rounded-full
+      className="pointer-events-none absolute inset-x-8 top-0 z-20 h-px rounded-full
                  bg-gradient-to-r from-transparent via-white/80 to-transparent
-                 opacity-40 transition-opacity duration-500 group-hover:opacity-100`}
+                 opacity-40 transition-opacity duration-500 group-hover:opacity-100"
     />
 
-    <div className="flex items-center gap-6 sm:gap-8 md:gap-9">
+    <div className="flex items-center gap-7 sm:gap-9 md:gap-10 w-full">
       {/* Single Round 3D Graphic Element */}
-      <div className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 shrink-0 rounded-full overflow-hidden flex items-center justify-center">
+      <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-[176px] md:h-[176px] shrink-0 rounded-full overflow-hidden flex items-center justify-center">
         <img
           src={plan.art}
           alt={plan.name}
@@ -112,7 +115,7 @@ const Card = ({ plan }) => (
       {/* Copy & Details */}
       <div className="flex-1 min-w-0 flex flex-col justify-center">
         <div className="flex items-center justify-between gap-3 flex-wrap sm:flex-nowrap">
-          <h3 className={`text-2xl sm:text-3xl md:text-[32px] tracking-tight leading-none ${plan.dark ? 'text-white' : 'text-black'}`}>
+          <h3 className={`text-2xl sm:text-3xl md:text-[34px] tracking-tight leading-none ${plan.dark ? 'text-white' : 'text-black'}`}>
             {plan.lead && <span className="font-semibold">{plan.lead} </span>}
             <span className="font-normal">{plan.name}</span>
           </h3>
@@ -123,8 +126,8 @@ const Card = ({ plan }) => (
             {plan.price}
           </span>
         </div>
-        <p className={`mt-3 sm:mt-4 text-sm sm:text-base font-light leading-relaxed max-w-[20rem]
-                       ${plan.dark ? 'text-white/65' : 'text-black/60'}`}>
+        <p className={`mt-3.5 sm:mt-4 text-base sm:text-[17px] font-light leading-relaxed max-w-[22rem]
+                       ${plan.dark ? 'text-white/70' : 'text-black/65'}`}>
           {plan.tagline}
         </p>
       </div>
@@ -134,7 +137,23 @@ const Card = ({ plan }) => (
 
 const Plans = () => {
   const trackRef = useRef(null);
+  const titleContainerRef = useRef(null);
   const [index, setIndex] = useState(0);
+  const [gutter, setGutter] = useState(0);
+
+  // Measure exact left margin of title container so first card aligns precisely with title
+  const updateGutter = useCallback(() => {
+    if (titleContainerRef.current) {
+      const rect = titleContainerRef.current.getBoundingClientRect();
+      setGutter(rect.left);
+    }
+  }, []);
+
+  useEffect(() => {
+    updateGutter();
+    window.addEventListener('resize', updateGutter);
+    return () => window.removeEventListener('resize', updateGutter);
+  }, [updateGutter]);
 
   const scrollToCard = useCallback((next) => {
     const track = trackRef.current;
@@ -142,33 +161,34 @@ const Plans = () => {
     const clamped = Math.max(0, Math.min(next, PLANS.length - 1));
     const card = track.children[clamped];
     if (card) {
-      track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      const targetLeft = card.offsetLeft - gutter;
+      track.scrollTo({ left: targetLeft, behavior: 'smooth' });
     }
     setIndex(clamped);
-  }, []);
+  }, [gutter]);
 
   const onScroll = useCallback(() => {
     const track = trackRef.current;
     if (!track) return;
     const cards = Array.from(track.children);
-    const centre = track.scrollLeft + track.clientWidth / 2;
+    const centre = track.scrollLeft + gutter + (cards[0]?.offsetWidth || 0) / 2;
 
     let nearest = { d: Infinity, i: 0 };
     cards.forEach((card, i) => {
-      const cardCentre = card.offsetLeft - track.offsetLeft + card.offsetWidth / 2;
+      const cardCentre = card.offsetLeft + card.offsetWidth / 2;
       const d = Math.abs(cardCentre - centre);
       if (d < nearest.d) nearest = { d, i };
     });
 
     setIndex(nearest.i);
-  }, []);
+  }, [gutter]);
 
   useEffect(() => { onScroll(); }, [onScroll]);
 
   return (
     <section id="plans" className="w-full bg-white py-20 md:py-28 overflow-hidden">
       {/* Header section with title, description, and left-aligned arrows */}
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 mb-10 md:mb-14">
+      <div ref={titleContainerRef} className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 mb-10 md:mb-14">
         <motion.div {...reveal(0)}>
           <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-normal tracking-tight text-black leading-[1.1]">
             Choose your fleet
@@ -186,7 +206,7 @@ const Plans = () => {
         </motion.div>
       </div>
 
-      {/* Full-bleed scroll track with zero awkward gap before card 1 */}
+      {/* Full-bleed scroll track with exact gutter padding matching the title */}
       <motion.div {...reveal(0.15)}>
         <div
           ref={trackRef}
@@ -194,8 +214,8 @@ const Plans = () => {
           className="flex gap-5 sm:gap-6 overflow-x-auto snap-x snap-mandatory pb-4
                      [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           style={{
-            paddingLeft: 'max(1.5rem, calc((100vw - 72rem) / 2 + 1.5rem))',
-            paddingRight: 'max(1.5rem, calc((100vw - 72rem) / 2 + 1.5rem))',
+            paddingLeft: gutter > 0 ? `${gutter}px` : 'max(1.5rem, calc((100vw - 72rem) / 2 + 4rem))',
+            paddingRight: gutter > 0 ? `${gutter}px` : 'max(1.5rem, calc((100vw - 72rem) / 2 + 4rem))',
           }}
         >
           {PLANS.map((plan) => (
