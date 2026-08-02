@@ -137,7 +137,8 @@ const Card = ({ plan }) => (
 
 const Plans = () => {
   const trackRef = useRef(null);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(1);
+  const isInitialMount = useRef(true);
 
   // Read the track's own computed paddingLeft — always accurate because it's
   // set via responsive Tailwind classes that mirror the title container.
@@ -174,10 +175,26 @@ const Plans = () => {
       if (d < nearest.d) nearest = { d, i };
     });
 
+    if (isInitialMount.current) {
+      return;
+    }
+
     setIndex(nearest.i);
   }, []);
 
-  useEffect(() => { onScroll(); }, [onScroll]);
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const card = track.children[1];
+    if (card) {
+      const pad = getTrackPadding();
+      track.scrollTo({ left: card.offsetLeft - pad, behavior: 'auto' });
+    }
+
+    isInitialMount.current = false;
+    onScroll();
+  }, [onScroll]);
 
   return (
     <section id="plans" className="w-full bg-white py-20 md:py-28 overflow-hidden">
