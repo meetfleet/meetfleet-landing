@@ -44,18 +44,15 @@ const Download = () => {
             Download the history&rsquo;s first social operating system, works with all your devices
           </motion.p>
 
-          {/* TestFlight QR code */}
-          <motion.div className="mb-8 md:mb-10 flex flex-col items-center gap-3" {...reveal(0.15)}>
+          {/* TestFlight download badge */}
+          <motion.div className="mb-8 md:mb-10 flex flex-col items-center" {...reveal(0.15)}>
             <a href="https://testflight.apple.com/join/meetfleet" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
               <img 
-                src="/testflight-qr.png" 
-                alt="Scan to join the Meetfleet beta on TestFlight" 
-                className="w-[140px] h-[140px] md:w-[160px] md:h-[160px] rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.06)] border border-black/[0.04] transition-transform hover:scale-105 cursor-pointer" 
+                src="/testflight.webp" 
+                alt="Available on TestFlight" 
+                className="h-[52px] md:h-[58px] w-auto transition-transform hover:scale-105 cursor-pointer" 
               />
             </a>
-            <span className="text-[11px] md:text-xs font-medium tracking-wide uppercase text-black/40">
-              Scan to join the beta
-            </span>
           </motion.div>
 
           {/* Devices — straddle the card's bottom edge (centered on it, floating) */}

@@ -46,9 +46,9 @@ const Hero = () => {
             Meetfleet is hyper-local coordination for the spontaneous era, a social OS connecting you instantly with real-time activities around you, from golf foursomes and romantic dates to group shopping, skiing, riding, and beach sessions.
           </motion.p>
 
-          {/* TestFlight QR code */}
+          {/* TestFlight download badge */}
           <motion.div
-            className="flex flex-col items-center gap-3 z-10 mt-6 sm:mt-8 md:mt-10"
+            className="flex flex-col items-center z-10 mt-6 sm:mt-8 md:mt-10"
             initial={{ opacity: 0, filter: 'blur(12px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
@@ -60,14 +60,11 @@ const Hero = () => {
               className="cursor-pointer"
             >
               <img 
-                src="/testflight-qr.png" 
-                alt="Scan to join the Meetfleet beta on TestFlight" 
-                className="w-[120px] h-[120px] md:w-[140px] md:h-[140px] rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.06)] border border-black/[0.04] transition-transform hover:scale-105 cursor-pointer" 
+                src="/testflight.webp" 
+                alt="Available on TestFlight" 
+                className="h-[48px] md:h-[54px] w-auto transition-transform hover:scale-105 cursor-pointer" 
               />
             </a>
-            <span className="text-[10px] md:text-[11px] font-medium tracking-wide uppercase text-black/35">
-              Scan to join the beta
-            </span>
           </motion.div>
         </div>
 
