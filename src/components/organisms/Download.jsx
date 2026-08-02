@@ -46,7 +46,7 @@ const Download = () => {
 
           {/* TestFlight download badge */}
           <motion.div className="mb-8 md:mb-10 flex flex-col items-center" {...reveal(0.15)}>
-            <a href="https://testflight.apple.com/join/meetfleet" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+            <a href="https://testflight.apple.com/join/nXyfPMSc" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
               <img 
                 src="/testflight.webp" 
                 alt="Available on TestFlight" 

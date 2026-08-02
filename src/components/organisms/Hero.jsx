@@ -54,7 +54,7 @@ const Hero = () => {
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
           >
             <a
-              href="https://testflight.apple.com/join/meetfleet"
+              href="https://testflight.apple.com/join/nXyfPMSc"
               target="_blank"
               rel="noopener noreferrer"
               className="cursor-pointer"
