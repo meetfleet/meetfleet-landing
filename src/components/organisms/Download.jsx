@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import logo from '../../assets/logo.svg';
 
 const devices = '/devices.webp';       // device lineup (1300 x 454 ≈ 2.86:1)
-const appStore = '/appstore.png';      // App Store download badge
 
 // Blur-in reveal, consistent with the rest of the site.
 const reveal = (delay = 0) => ({
@@ -45,15 +44,17 @@ const Download = () => {
             Download the history&rsquo;s first social operating system, works with all your devices
           </motion.p>
 
-          {/* App Store badge — blurred with uncropped overflow padding + Coming Soon pill */}
-          <motion.div className="mb-8 md:mb-10 relative inline-flex items-center justify-center p-4 -m-4 overflow-visible" {...reveal(0.15)}>
-            <img 
-              src={appStore} 
-              alt="Download on the App Store" 
-              className="h-[52px] md:h-[58px] w-auto filter blur-[6px] opacity-75 pointer-events-none select-none transition-all" 
-            />
-            <span className="absolute inline-flex items-center px-3.5 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-black/80 text-white border border-white/20 backdrop-blur-md shadow-lg pointer-events-none">
-              Coming Soon
+          {/* TestFlight QR code */}
+          <motion.div className="mb-8 md:mb-10 flex flex-col items-center gap-3" {...reveal(0.15)}>
+            <a href="https://testflight.apple.com/join/meetfleet" target="_blank" rel="noopener noreferrer">
+              <img 
+                src="/testflight.webp" 
+                alt="Scan to join the Meetfleet beta on TestFlight" 
+                className="w-[140px] h-[140px] md:w-[160px] md:h-[160px] rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.06)] border border-black/[0.04] transition-transform hover:scale-105" 
+              />
+            </a>
+            <span className="text-[11px] md:text-xs font-medium tracking-wide uppercase text-black/40">
+              Scan to join the beta
             </span>
           </motion.div>
 
