@@ -46,7 +46,7 @@ const Download = () => {
 
           {/* TestFlight QR code */}
           <motion.div className="mb-8 md:mb-10 flex flex-col items-center gap-3" {...reveal(0.15)}>
-            <a href="https://testflight.apple.com/join/meetfleet" target="_blank" rel="noopener noreferrer">
+            <a href="https://testflight.apple.com/join/meetfleet" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
               <img 
                 src="/testflight.webp" 
                 alt="Scan to join the Meetfleet beta on TestFlight" 
