@@ -50,7 +50,7 @@ const Download = () => {
               <img 
                 src="/testflight.webp" 
                 alt="Available on TestFlight" 
-                className="h-[52px] md:h-[58px] w-auto transition-transform hover:scale-105 cursor-pointer" 
+                className="h-[52px] md:h-[58px] w-auto cursor-pointer" 
               />
             </a>
           </motion.div>

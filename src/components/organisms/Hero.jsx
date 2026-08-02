@@ -62,7 +62,7 @@ const Hero = () => {
               <img 
                 src="/testflight.webp" 
                 alt="Available on TestFlight" 
-                className="h-[48px] md:h-[54px] w-auto transition-transform hover:scale-105 cursor-pointer" 
+                className="h-[48px] md:h-[54px] w-auto cursor-pointer" 
               />
             </a>
           </motion.div>
