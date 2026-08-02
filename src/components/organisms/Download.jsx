@@ -16,7 +16,7 @@ const Download = () => {
     <section id="download" className="w-full bg-white px-3 sm:px-5 md:p-6">
       {/* Extra bottom padding so the overhanging devices aren't clipped */}
       <div className="mx-auto max-w-6xl pt-6 pb-[17vw] sm:pb-[14vw] md:pb-[12vw]">
-        {/* Card — rounded white surface, soft shadow. NOT overflow-hidden,
+        {/* Card - rounded white surface, soft shadow. NOT overflow-hidden,
             so the devices can straddle the bottom edge. */}
         <div className="relative bg-white rounded-[24px] md:rounded-[35px] shadow-[0_4px_100px_rgba(0,0,0,0.08)] px-6 pt-12 md:pt-16 pb-[21vw] sm:pb-[17vw] md:pb-[15vw] flex flex-col items-center text-center">
 
@@ -55,7 +55,7 @@ const Download = () => {
             </a>
           </motion.div>
 
-          {/* Devices — straddle the card's bottom edge (centered on it, floating) */}
+          {/* Devices - straddle the card's bottom edge (centered on it, floating) */}
           <motion.img
             src={devices}
             alt="Meetfleet on all your devices"

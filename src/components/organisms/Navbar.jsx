@@ -109,7 +109,7 @@ const Navbar = () => {
               : 'bg-white/18 backdrop-blur-[16px] backdrop-saturate-[150%] border-white/40 shadow-none'
           }`}
         >
-          {/* Logo ONLY — No text wordmark beside it */}
+          {/* Logo ONLY - No text wordmark beside it */}
           <a
             href="#hero"
             onClick={(e) => handleScrollTo(e, '#hero')}
@@ -163,7 +163,7 @@ const Navbar = () => {
             })}
           </nav>
 
-          {/* Right Action — Download CTA (Desktop) */}
+          {/* Right Action - Download CTA (Desktop) */}
           <div className="hidden md:flex items-center">
             <a
               href="#download"
@@ -224,7 +224,7 @@ const Navbar = () => {
         </motion.div>
       </header>
 
-      {/* Dune Custom Mobile Menu — Fullscreen Dark Expansion with Clip-Path & Blur */}
+      {/* Dune Custom Mobile Menu - Fullscreen Dark Expansion with Clip-Path & Blur */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -282,7 +282,7 @@ const Navbar = () => {
               })}
             </ul>
 
-            {/* Dune Mobile CTA Button — #0033FF Blue */}
+            {/* Dune Mobile CTA Button - #0033FF Blue */}
             <motion.div
               initial={{ y: 14, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}

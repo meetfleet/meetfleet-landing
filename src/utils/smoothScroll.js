@@ -1,6 +1,6 @@
 import { animate } from 'framer-motion';
 
-// Shared spring physics — tuned for smooth, fluid Apple-style gliding.
+// Shared spring physics - tuned for smooth, fluid Apple-style gliding.
 // Reused by every spring-driven scroll so section travel and scroll-to-top
 // feel identical.
 const SPRING_CONFIG = {
@@ -12,7 +12,7 @@ const SPRING_CONFIG = {
 };
 
 /**
- * springScrollTo — smooth scroll with Framer Motion spring physics
+ * springScrollTo - smooth scroll with Framer Motion spring physics
  * @param {HTMLElement|string} target - target element or element ID / selector
  * @param {Object} customConfig - optional spring physics overrides
  */
@@ -47,7 +47,7 @@ export const springScrollTo = (target, customConfig = {}) => {
 };
 
 /**
- * springScrollToTop — glide back to the top of the page using the exact same
+ * springScrollToTop - glide back to the top of the page using the exact same
  * spring physics as section-to-section travel.
  * @param {Object} customConfig - optional spring physics overrides
  */

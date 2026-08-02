@@ -25,7 +25,7 @@ const Message = () => {
       <div className="mx-auto w-full max-w-6xl px-6 sm:px-10 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.45fr] items-stretch gap-12 lg:gap-16">
 
-          {/* Left — text column */}
+          {/* Left - text column */}
           <div className="flex flex-col items-start justify-center">
             <img
               src={quote}
@@ -58,10 +58,10 @@ const Message = () => {
             />
           </div>
 
-          {/* Right — Apple-style white panel: soft shadow, hairline border,
+          {/* Right - Apple-style white panel: soft shadow, hairline border,
               very thin gradient grid, photo framed inside with parallax drift */}
           <div className="relative h-full min-h-[360px] rounded-[28px] bg-white border border-black/[0.06] shadow-[0_10px_60px_rgba(0,0,0,0.10)] p-3 sm:p-4 flex overflow-hidden">
-            {/* Thin gradient grid — 1px lines, faded via radial mask */}
+            {/* Thin gradient grid - 1px lines, faded via radial mask */}
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0 opacity-[0.5]"
@@ -76,7 +76,7 @@ const Message = () => {
               }}
             />
 
-            {/* Photo frame — fills the panel, real parallax + scale + instant blur placeholder */}
+            {/* Photo frame - fills the panel, real parallax + scale + instant blur placeholder */}
             <div className="relative z-10 w-full overflow-hidden rounded-[18px] bg-gray-100">
               {/* Instant blur placeholder while full image loads */}
               <div

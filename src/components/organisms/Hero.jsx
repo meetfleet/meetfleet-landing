@@ -11,10 +11,10 @@ const Hero = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      {/* Card — rounded white surface, soft uncropped shadow */}
+      {/* Card - rounded white surface, soft uncropped shadow */}
       <div className="w-full max-w-7xl min-h-[660px] lg:h-[calc(100vh-4rem)] bg-white rounded-[24px] md:rounded-[35px] shadow-[0_12px_60px_rgba(0,0,0,0.08)] flex flex-col items-center gap-8 overflow-hidden relative p-6 sm:p-12 md:p-14">
 
-        {/* Content group — centered in the available vertical space */}
+        {/* Content group - centered in the available vertical space */}
         <div className="flex-grow flex flex-col items-center justify-center gap-2 sm:gap-4 w-full max-w-2xl">
           {/* Logo */}
           <motion.img
@@ -68,7 +68,7 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Image — zoomed in */}
+        {/* Image - zoomed in */}
         <motion.div
           className="w-full max-w-4xl lg:max-w-5xl mt-auto flex justify-center overflow-visible"
           initial={{ opacity: 0, filter: 'blur(12px)', scale: 0.95 }}

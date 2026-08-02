@@ -17,7 +17,7 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Brand Header — Minimalist Gray Logo + Title */}
+        {/* Brand Header - Minimalist Gray Logo + Title */}
         <div className="flex items-center gap-3 pt-2">
           <img 
             src={logo} 

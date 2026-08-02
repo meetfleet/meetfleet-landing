@@ -6,7 +6,7 @@ import { useStickyScene } from '../animations/stickySceneContext';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 // Lazy-load the PDF viewer so the heavy PDF.js bundle (~450kB gzip) is only
-// fetched when this section renders — keeps the initial page load lean.
+// fetched when this section renders - keeps the initial page load lean.
 const PdfViewer = lazy(() => import('../media/PdfViewer'));
 
 const pdf = '/sas.pdf';
@@ -23,13 +23,13 @@ const InventionScene = () => {
   const progress = useStickyScene();
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
-  // Left column — staggered text cascade.
+  // Left column - staggered text cascade.
   const tag = useReveal(progress, 0.02, 0.1, 24);
   const heading = useReveal(progress, 0.05, 0.14);
   const body = useReveal(progress, 0.08, 0.18);
   const buttons = useReveal(progress, 0.12, 0.22, 28);
 
-  // Right viewer — appears early, slides in from the right (subtle drift).
+  // Right viewer - appears early, slides in from the right (subtle drift).
   const viewerOpacity = useTransform(progress, [0.02, 0.14], [0, 1]);
   const viewerX = useTransform(progress, [0, 0.25, 1], ['14%', '4%', '-4%']);
 
@@ -39,7 +39,7 @@ const InventionScene = () => {
     <section id="invention" className="w-full bg-white overflow-x-clip overflow-y-visible py-16 sm:py-24 lg:py-0 lg:h-full lg:flex lg:items-center">
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-0">
 
-        {/* Left — text column (padded, Apple-style symmetric margins) */}
+        {/* Left - text column (padded, Apple-style symmetric margins) */}
         <div className="flex flex-col items-start pl-6 sm:pl-10 lg:pl-16 xl:pl-24 pr-6 sm:pr-10 lg:pr-8 max-w-2xl">
 
           {/* Outlined blue tag */}
@@ -74,7 +74,7 @@ const InventionScene = () => {
             when, and where a great real-world connection is going to happen.
           </motion.p>
 
-          {/* Buttons — hero radius, non-functional for now */}
+          {/* Buttons - hero radius, non-functional for now */}
           <motion.div
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
             style={buttons}
@@ -99,14 +99,14 @@ const InventionScene = () => {
           </motion.div>
         </div>
 
-        {/* Right — Apple-style shadow container, centered on mobile, flush to the right edge on desktop. */}
+        {/* Right - Apple-style shadow container, centered on mobile, flush to the right edge on desktop. */}
         <motion.div
           className="relative w-full lg:justify-self-end will-change-transform"
           style={{ opacity: viewerOpacity, x }}
         >
           <div className="relative mx-auto lg:ml-auto lg:mr-0 w-[calc(100%-2rem)] sm:w-full max-w-[640px] bg-[#f6f7f9] rounded-[24px] sm:rounded-[36px] lg:rounded-l-[36px] lg:rounded-r-none shadow-[0_-20px_80px_rgba(0,0,0,0.14)] p-6 sm:p-8 lg:p-10">
 
-            {/* Glassmorphism PDF viewer — rendered via PDF.js (no native
+            {/* Glassmorphism PDF viewer - rendered via PDF.js (no native
                 browser toolbar, scrollbar, or side gutters). */}
             <div className="relative rounded-[20px] overflow-hidden border border-white/60 bg-white shadow-[0_-10px_40px_rgba(0,0,0,0.10)]">
               <Suspense fallback={<div className="w-full h-[560px] md:h-[680px] bg-white" />}>

@@ -4,7 +4,7 @@ import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { StickySceneContext } from './stickySceneContext';
 
 /**
- * StickyScene — an Apple-style sticky scroll scene (desktop) with a safe
+ * StickyScene - an Apple-style sticky scroll scene (desktop) with a safe
  * mobile fallback.
  *
  * DESKTOP (lg+): a tall scroll track (`height = 100 * trackVh`) with a
@@ -12,7 +12,7 @@ import { StickySceneContext } from './stickySceneContext';
  * (0→1, spring-smoothed) drives child transforms via useStickyScene().
  *
  * MOBILE (< lg): the pin/clip breaks when content is taller than the
- * viewport — the top (heading SVGs, mockups) gets cut off. So on mobile we
+ * viewport - the top (heading SVGs, mockups) gets cut off. So on mobile we
  * drop the pin entirely: the section flows normally (auto height, natural
  * top gap, nothing clipped) and progress is frozen at a "fully revealed"
  * value (0.5) so reveal transforms resolve to their visible mid-state and
@@ -35,7 +35,7 @@ const StickyScene = ({ children, trackVh = 200, className = '', stiffness = 120,
   const progress = isDesktop ? smooth : staticProgress;
 
   if (!isDesktop) {
-    // Natural document flow — no pin, no clip, content sets its own height.
+    // Natural document flow - no pin, no clip, content sets its own height.
     return (
       <div className={`relative ${className}`}>
         <StickySceneContext.Provider value={progress}>

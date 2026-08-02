@@ -3,7 +3,7 @@ import { useTransform, useSpring, useScroll, motion } from 'framer-motion';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 /* --------------------------------------------------------------------------
- * GradientGrid — a 3D-tilted grid of gradient "app icon" tiles.
+ * GradientGrid - a 3D-tilted grid of gradient "app icon" tiles.
  * Decoded from the reference: each tile is a rounded square with a layered
  * base gradient (blues/purples/greens) + several blurred ellipse "blobs"
  * (mix-blend-mode: hue) + a vivid overlay (mix-blend-mode: difference/overlay).
@@ -39,7 +39,7 @@ const BLOB_COLORS = [
   '#EBFF00', '#957AFF', '#8204FF', '#FF007A', '#3CADFF', '#27F006',
 ];
 
-// Deterministic pseudo-random from a seed — keeps tiles varied but stable.
+// Deterministic pseudo-random from a seed - keeps tiles varied but stable.
 const rng = (seed) => {
   let s = seed * 9301 + 49297;
   return () => {
@@ -51,7 +51,7 @@ const rng = (seed) => {
 // One tile: base gradient + blurred hue blobs + vivid overlay.
 const GradientTile = ({ seed, size = 150 }) => {
   const rand = rng(seed + 1);
-  const blobCount = 4 + Math.floor(rand() * 2); // 4–5 blobs
+  const blobCount = 4 + Math.floor(rand() * 2); // 4-5 blobs
   const blobs = Array.from({ length: blobCount }, () => ({
     cx: rand() * size,
     cy: rand() * size,
@@ -77,12 +77,12 @@ const GradientTile = ({ seed, size = 150 }) => {
         filter: 'saturate(1.6) brightness(1.06)',
         // Perf: a tile's internals (gradients + blurred blobs) are STATIC.
         // `contain: paint` lets the browser rasterize each tile once and cache
-        // it — the pricey SVG blurs never re-render during scroll.
+        // it - the pricey SVG blurs never re-render during scroll.
         contain: 'layout paint style',
         transform: 'translateZ(0)',
       }}
     >
-      {/* Blurred hue blobs — borrow hue from the vivid palette */}
+      {/* Blurred hue blobs - borrow hue from the vivid palette */}
       <svg
         className="absolute inset-0 block animate-spin-slow"
         width={size}
@@ -103,7 +103,7 @@ const GradientTile = ({ seed, size = 150 }) => {
           />
         ))}
       </svg>
-      {/* Second blob layer with 'color' blend — injects real chroma
+      {/* Second blob layer with 'color' blend - injects real chroma
           (not just hue), so the splotches stay bright and saturated. */}
       <svg
         className="absolute inset-0 block animate-spin-slow-reverse"
@@ -125,7 +125,7 @@ const GradientTile = ({ seed, size = 150 }) => {
           />
         ))}
       </svg>
-      {/* Vivid overlay — this drives the saturated, varied per-tile look */}
+      {/* Vivid overlay - this drives the saturated, varied per-tile look */}
       <div
         className="absolute inset-0"
         style={{ backgroundColor: overlay.c, mixBlendMode: overlay.b }}
@@ -184,7 +184,7 @@ const GradientGridScene = () => {
   const sectionRef = useRef(null);
   const isDesktop = useMediaQuery('(min-width: 1024px)');
 
-  // Self-driven scroll progress across the whole section — works on BOTH web
+  // Self-driven scroll progress across the whole section - works on BOTH web
   // and mobile (no frozen fallback), so the tiles animate intensely everywhere.
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -192,11 +192,11 @@ const GradientGridScene = () => {
   });
   const progress = useSpring(scrollYProgress, { stiffness: 55, damping: 24, mass: 1.05, restDelta: 0.0004 });
 
-  // Reveal in, then HOLD — no fade/blur-out on exit; the tiles stay present.
+  // Reveal in, then HOLD - no fade/blur-out on exit; the tiles stay present.
   const opacity = useTransform(progress, [0.08, 0.32], [0, 1]);
   const blur = useTransform(progress, [0.08, 0.3], ['blur(24px)', 'blur(0px)']);
 
-  // Glass card — reveals as the grid settles near center, then holds (no exit fade).
+  // Glass card - reveals as the grid settles near center, then holds (no exit fade).
   const cardOpacity = useTransform(progress, [0.3, 0.44], [0, 1]);
   const cardY = useTransform(progress, [0.3, 0.5], [28, 0]);
   const cardScale = useTransform(progress, [0.3, 0.5], [0.96, 1]);
@@ -221,7 +221,7 @@ const GradientGridScene = () => {
         ))}
       </motion.div>
 
-      {/* Edge blur — progressively blur + fade the outer columns on the left
+      {/* Edge blur - progressively blur + fade the outer columns on the left
           and right so the tile field dissolves at its horizontal extremes.
           backdrop-blur blurs the tiles behind; the mask ramps it from strong
           at the edge to none by ~28% in. Desktop only. */}
@@ -242,7 +242,7 @@ const GradientGridScene = () => {
         }}
       />
 
-      {/* Frosted glass card — centered overlay, intense white surface. */}
+      {/* Frosted glass card - centered overlay, intense white surface. */}
       <motion.div
         style={{ opacity: cardOpacity, y: cardY, scale: cardScale }}
         className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none px-6 will-change-transform"

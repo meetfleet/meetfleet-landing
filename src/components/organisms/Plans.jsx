@@ -140,7 +140,7 @@ const Plans = () => {
   const [index, setIndex] = useState(1);
   const isInitialMount = useRef(true);
 
-  // Read the track's own computed paddingLeft — always accurate because it's
+  // Read the track's own computed paddingLeft - always accurate because it's
   // set via responsive Tailwind classes that mirror the title container.
   const getTrackPadding = () => {
     const track = trackRef.current;
@@ -198,7 +198,7 @@ const Plans = () => {
 
   return (
     <section id="plans" className="w-full bg-white py-20 md:py-28 overflow-hidden">
-      {/* Header — uses mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 */}
+      {/* Header - uses mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 */}
       <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16 mb-10 md:mb-14">
         <motion.div {...reveal(0)}>
           <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-normal tracking-tight text-black leading-[1.1]">
@@ -217,7 +217,7 @@ const Plans = () => {
         </motion.div>
       </div>
 
-      {/* Scroll track — paddingLeft uses the exact same responsive values as
+      {/* Scroll track - paddingLeft uses the exact same responsive values as
           the title container so the first card lines up with "Choose your fleet".
           On wide screens (≥ max-w-6xl) the lg value is overridden with a calc
           that adds the centering margin. Cards scroll uncropped past both edges. */}

@@ -4,14 +4,14 @@ import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
-// PDF.js worker — bundled by Vite via ?url so it's served locally
+// PDF.js worker - bundled by Vite via ?url so it's served locally
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
   import.meta.url,
 ).toString();
 
 /**
- * PdfViewer — renders a PDF as a plain canvas via PDF.js, with NO native
+ * PdfViewer - renders a PDF as a plain canvas via PDF.js, with NO native
  * browser toolbar, scrollbar, or side gutters. Page navigation + fullscreen
  * + mobile touch swipe gestures are driven by our own floating glass controls.
  */
@@ -95,7 +95,7 @@ const PdfViewer = ({ file, className = '' }) => {
       className={`relative bg-white select-none ${className}`}
       style={width > 0 ? { minHeight: Math.round(width * ratio) } : { minHeight: '400px' }}
     >
-      {/* Page canvas — fills the frame, centered */}
+      {/* Page canvas - fills the frame, centered */}
       <div className="absolute inset-0 overflow-hidden flex justify-center items-center">
         <Document
           file={file}
@@ -117,7 +117,7 @@ const PdfViewer = ({ file, className = '' }) => {
         </Document>
       </div>
 
-      {/* Floating glass controls — responsive & touch friendly */}
+      {/* Floating glass controls - responsive & touch friendly */}
       <div className="pointer-events-none absolute inset-x-0 bottom-4 flex items-center justify-center gap-2 sm:gap-3 z-20 px-4">
         <button
           type="button"

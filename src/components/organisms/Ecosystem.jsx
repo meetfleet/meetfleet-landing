@@ -32,7 +32,7 @@ const Ecosystem = () => {
             Collapses to diagram-on-top, stacked blocks on mobile. */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] items-center gap-x-12 gap-y-16 md:gap-y-24">
 
-          {/* Left column — top-left + bottom-left blocks */}
+          {/* Left column - top-left + bottom-left blocks */}
           <div className="order-2 lg:order-1 flex flex-col gap-16 md:gap-32">
             <Block title="Trust Infrastructure" align="right" delay={0}>
               User opens app. Before they ever see a plan, the system has already worked.
@@ -48,7 +48,7 @@ const Ecosystem = () => {
             </Block>
           </div>
 
-          {/* Center — overlapping-circles diagram with logo at its core */}
+          {/* Center - overlapping-circles diagram with logo at its core */}
           <motion.div
             className="order-1 lg:order-2 relative mx-auto w-[280px] h-[280px] md:w-[360px] md:h-[360px]"
             {...reveal(0.05)}
@@ -56,7 +56,7 @@ const Ecosystem = () => {
             <img src={layers} alt="" className="w-full h-full" />
           </motion.div>
 
-          {/* Right column — top-right + bottom-right blocks */}
+          {/* Right column - top-right + bottom-right blocks */}
           <div className="order-3 flex flex-col gap-16 md:gap-32">
             <Block title="Intent Engine" align="left" delay={0.05}>
               User selects a Plan, not a location. &ldquo;Co-Study,&rdquo; &ldquo;Sunday

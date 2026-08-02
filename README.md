@@ -1,14 +1,14 @@
 # Meetfleet
 
-The History's First Social OS — marketing landing page.
+The History's First Social OS - marketing landing page.
 
 Live at **[meetfleet.org](https://meetfleet.org/)**.
 
 ## Stack
 
-- **React 18** + **Vite** — SPA, fast HMR, optimized production build
-- **Tailwind CSS** — utility styling
-- **Framer Motion** — scroll-driven animation (sticky scenes, parallax, reveals)
+- **React 18** + **Vite** - SPA, fast HMR, optimized production build
+- **Tailwind CSS** - utility styling
+- **Framer Motion** - scroll-driven animation (sticky scenes, parallax, reveals)
 
 ## Development
 
@@ -46,5 +46,5 @@ Pushing to `main` triggers the GitHub Actions workflow
 the site and publishes `dist/` to GitHub Pages. The custom domain is pinned via
 `public/CNAME`.
 
-> Note: manage the domain through `public/CNAME` in the repo — editing it in the
+> Note: manage the domain through `public/CNAME` in the repo - editing it in the
 > GitHub web UI can revert Pages to a legacy branch build and break the deploy.
