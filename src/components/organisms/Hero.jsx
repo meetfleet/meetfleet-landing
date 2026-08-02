@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import heroImage from '../../assets/hero.webp';
 import logo from '../../assets/logo.svg';
-import { springScrollTo } from '../../utils/smoothScroll';
 
 const Hero = () => {
   return (
@@ -47,36 +46,28 @@ const Hero = () => {
             Meetfleet is hyper-local coordination for the spontaneous era, a social OS connecting you instantly with real-time activities around you, from golf foursomes and romantic dates to group shopping, skiing, riding, and beach sessions.
           </motion.p>
 
-          {/* Buttons */}
+          {/* TestFlight QR code */}
           <motion.div
-            className="flex flex-col sm:flex-row items-center gap-3 z-10 mt-6 sm:mt-8 md:mt-10"
+            className="flex flex-col items-center gap-3 z-10 mt-6 sm:mt-8 md:mt-10"
             initial={{ opacity: 0, filter: 'blur(12px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
           >
             <a
-              href="#download"
-              onClick={(e) => {
-                e.preventDefault();
-                springScrollTo('download');
-              }}
-              className="px-[25px] py-[13px] text-[14px] leading-none font-light bg-[#0033FF] text-white rounded-[11px] hover:bg-[#0029cc] transition-colors w-full sm:w-auto text-center inline-flex items-center justify-center gap-2.5 group shadow-[0_4px_16px_rgba(0,51,255,0.25)]"
+              href="https://testflight.apple.com/join/meetfleet"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer"
             >
-              <span>Download</span>
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-white/20 text-white border border-white/30 backdrop-blur-md group-hover:bg-white/30 transition-all">
-                Soon
-              </span>
+              <img 
+                src="/testflight-qr.png" 
+                alt="Scan to join the Meetfleet beta on TestFlight" 
+                className="w-[120px] h-[120px] md:w-[140px] md:h-[140px] rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.06)] border border-black/[0.04] transition-transform hover:scale-105 cursor-pointer" 
+              />
             </a>
-            <a
-              href="#message"
-              onClick={(e) => {
-                e.preventDefault();
-                springScrollTo('message');
-              }}
-              className="px-[29px] py-[14px] text-[14px] leading-none font-light bg-white text-black/70 rounded-[11px] border border-black/15 hover:bg-black/[0.03] transition-colors shadow-[0_3px_16px_rgba(0,0,0,0.06)] w-full sm:w-auto text-center"
-            >
-              Learn More
-            </a>
+            <span className="text-[10px] md:text-[11px] font-medium tracking-wide uppercase text-black/35">
+              Scan to join the beta
+            </span>
           </motion.div>
         </div>
 
