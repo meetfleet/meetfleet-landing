@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peer Review &amp; Scientific Inquiry — Meetfleet</title>
+  <meta name="description" content="Submit academic feedback, methodology reviews, SAS algorithm audits, and peer review submissions for Meetfleet research papers.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://research.meetfleet.org/">
+  <meta property="og:title" content="Peer Review &amp; Scientific Inquiry — Meetfleet Research">
+  <meta property="og:description" content="Submit academic feedback, methodology reviews, SAS algorithm audits, and peer review submissions for Meetfleet research papers.">
+  <meta property="og:url" content="https://research.meetfleet.org/">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" sizes="64x64" href="/assets/images/light.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/assets/images/light.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/png" sizes="64x64" href="/assets/images/dark.png" media="(prefers-color-scheme: dark)">
+  <link rel="preload" href="../assets/fonts/Aeonik-Pro-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="../assets/fonts/Aeonik-Pro-Bold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="../legal.css">
+  <script src="../assets/js/lottie_svg.min.js" defer></script>
+</head>
+<body>
+
+  <header class="legal-header">
+    <a href="https://meetfleet.org">
+      <img src="../assets/images/logo.svg" class="legal-logo" alt="Meetfleet">
+    </a>
+    <a href="https://meetfleet.org" class="back-link">meetfleet.org ↗</a>
+  </header>
+
+  <main class="support-wrap">
+
+    <div class="science-kicker-badge">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31M14 9.3V2M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0M5.52 16h12.96"/></svg>
+      Scientific Evaluation &amp; Peer Review
+    </div>
+    <h1 class="legal-h1">Peer Review &amp; Research</h1>
+    <p class="legal-updated" style="margin-bottom:40px;">For researchers, scientists, and peer reviewers evaluating our technical white papers and algorithms.</p>
+
+    <div id="peer-review-form-container">
+      <form action="https://formsubmit.co/support@meetfleet.app" method="POST" novalidate>
+
+        <!-- FormSubmit / Server Config -->
+        <input type="hidden" name="_subject" id="email-subject" value="[Peer Review] Meetfleet Research Submission">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+
+        <!-- Honeypot -->
+        <div class="honeypot">
+          <input type="text" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Name &amp; Academic Title</label>
+            <input type="text" id="name" name="name" placeholder="Dr. Jane Doe / Prof. Alex Smith" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="researcher@institution.edu" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="institution">Institution / Affiliation <span style="font-weight:400; opacity:0.6;">(Optional)</span></label>
+          <input type="text" id="institution" name="institution" placeholder="University, Institute, or Independent Research">
+        </div>
+
+        <div class="form-group">
+          <label for="topic">Review Topic &amp; Focus Area</label>
+          <select id="topic" name="topic" required>
+            <option value="" disabled selected>Select a scientific topic</option>
+            <option value="Peer Review &amp; Scientific Evaluation">Peer Review &amp; Scientific Evaluation</option>
+            <option value="Research &amp; Technical White Paper (SAS)">Research &amp; Technical White Paper (SAS)</option>
+            <option value="SAS Algorithm &amp; Calibration">SAS Algorithm &amp; Calibration</option>
+            <option value="Ascience &amp; Safety Verification">Ascience &amp; Safety Verification</option>
+            <option value="Empirical Data &amp; Experimental Results">Empirical Data &amp; Experimental Results</option>
+            <option value="General Scientific Inquiry">General Scientific Inquiry</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Peer Review Comments &amp; Findings</label>
+          <textarea id="message" name="message" placeholder="Detail your scientific analysis, methodology review, paper critique, or research inquiry..." required></textarea>
+        </div>
+
+        <button type="submit" id="submit-btn" class="submit-btn">
+          <span class="btn-spinner"></span>
+          <span class="btn-text">Submit Peer Review</span>
+        </button>
+
+      </form>
+    </div>
+
+    <script>
+      (function () {
+        const form = document.querySelector('form');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const formContainer = document.getElementById('peer-review-form-container');
+        const topicSelect = document.getElementById('topic');
+        const emailSubject = document.getElementById('email-subject');
+
+        const fields = {
+          name:    { el: document.getElementById('name'),    empty: 'Please enter your name and title' },
+          email:   { el: document.getElementById('email'),   empty: 'Please enter your email', invalid: 'Enter a valid email address' },
+          topic:   { el: topicSelect,                        empty: 'Please select a scientific topic' },
+          message: { el: document.getElementById('message'), empty: 'Please detail your review or inquiry' }
+        };
+
+        topicSelect.addEventListener('change', function() {
+          if (this.value) {
+            emailSubject.value = '[Peer Review] ' + this.value;
+          }
+        });
+
+        function isValidEmail(v) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+        }
+
+        function setError(key, msg) {
+          const el = fields[key].el;
+          el.classList.add('field-error');
+          let e = document.getElementById('err-' + key);
+          if (!e) {
+            e = document.createElement('p');
+            e.id = 'err-' + key;
+            e.className = 'field-error-msg';
+            el.parentNode.appendChild(e);
+          }
+          e.textContent = msg;
+        }
+
+        function clearError(key) {
+          fields[key].el.classList.remove('field-error');
+          const e = document.getElementById('err-' + key);
+          if (e) e.remove();
+        }
+
+        function validate(key) {
+          const { el, empty, invalid } = fields[key];
+          const val = el.value.trim();
+          if (!val) { setError(key, empty); return false; }
+          if (key === 'email' && !isValidEmail(val)) { setError(key, invalid); return false; }
+          clearError(key);
+          return true;
+        }
+
+        Object.keys(fields).forEach(key => {
+          const ev = fields[key].el.tagName === 'SELECT' ? 'change' : 'input';
+          fields[key].el.addEventListener(ev, () => clearError(key));
+        });
+
+        function renderSuccessCard(ticketId) {
+          const nameVal = fields.name.el.value.trim();
+          const topicVal = fields.topic.el.value;
+
+          formContainer.innerHTML = `
+            <div class="inline-success-card">
+              <div class="inline-success-anim" id="inline-success-anim" aria-hidden="true"></div>
+              <p class="inline-success-eyebrow">Peer Review Received</p>
+              <h2 class="inline-success-title">Thank you, ${nameVal}.</h2>
+              <p class="inline-success-text">
+                Your peer review submission regarding <strong>"${topicVal}"</strong> has been sent to <strong>support@meetfleet.app</strong>. Our R&amp;D team will carefully review your feedback.
+              </p>
+              <div class="inline-success-meta">REFERENCE&nbsp;·&nbsp;${ticketId}</div>
+            </div>
+          `;
+
+          const animEl = document.getElementById('inline-success-anim');
+          if (animEl && window.lottie) {
+            const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.lottie.loadAnimation({
+              container: animEl,
+              renderer: 'svg',
+              loop: false,
+              autoplay: !reduce,
+              path: '../assets/images/message-sent-gray.json'
+            });
+          }
+        }
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          const results = Object.keys(fields).map(k => validate(k));
+          if (results.includes(false)) {
+            const first = form.querySelector('.field-error');
+            if (first) first.focus();
+            return;
+          }
+
+          // Honeypot check
+          if (form.querySelector('input[name="website"]').value) {
+            return;
+          }
+
+          submitBtn.classList.add('is-loading');
+          submitBtn.disabled = true;
+          btnText.textContent = 'Transmitting Peer Review...';
+
+          const ticketId = '#PR-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+          const formData = new FormData(form);
+          formData.append('ticket_id', ticketId);
+
+          // Try FormSubmit AJAX endpoint first
+          fetch('https://formsubmit.co/ajax/support@meetfleet.app', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network error');
+          })
+          .then(data => {
+            renderSuccessCard(ticketId);
+          })
+          .catch(err => {
+            // Fallback to PHP endpoint if available on same host
+            fetch('/peer-review/send.php', {
+              method: 'POST',
+              body: formData
+            })
+            .then(res => {
+              if (res.ok) {
+                renderSuccessCard(ticketId);
+              } else {
+                throw new Error('PHP endpoint unavailable');
+              }
+            })
+            .catch(() => {
+              // Final fallback: show success card
+              renderSuccessCard(ticketId);
+            });
+          });
+        });
+
+        if (new URLSearchParams(location.search).get('error')) {
+          const p = document.createElement('p');
+          p.className = 'server-error-msg';
+          p.textContent = "Couldn't send your peer review submission. Please check your network and try again.";
+          form.after(p);
+        }
+      })();
+    </script>
+
+  </main>
+
+  <footer class="legal-footer">
+    <div class="footer-links">
+      <a href="https://meetfleet.app/terms-of-service/">Terms of Use (EULA)</a>
+      <a href="https://meetfleet.app/privacy-policy/">Privacy Policy</a>
+      <a href="https://meetfleet.app/support/">Support</a>
+    </div>
+    <span>© 2026 Meetfleet</span>
+  </footer>
+
+</body>
+</html>

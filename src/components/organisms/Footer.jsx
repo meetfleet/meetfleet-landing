@@ -67,7 +67,7 @@ const Footer = () => {
             </h3>
             <ul className="flex flex-col gap-2">
               <li><a href="#invention" className="hover:text-[#1d1d1f] transition-colors">Research Paper</a></li>
-              <li><a href="#invention" className="hover:text-[#1d1d1f] transition-colors">Peer Review</a></li>
+              <li><a href="/peer-review/" className="hover:text-[#1d1d1f] transition-colors">Peer Review</a></li>
               <li><a href="#invention" className="hover:text-[#1d1d1f] transition-colors">Loneliness Eradication</a></li>
               <li><a href="#invention" className="hover:text-[#1d1d1f] transition-colors">Safety Infrastructure</a></li>
             </ul>
