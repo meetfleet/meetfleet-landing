@@ -88,7 +88,7 @@ const InventionScene = () => {
               Research Paper
             </a>
             <a
-              href="/peer-review/"
+              href="https://research.meetfleet.org/"
               className="inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[14px] font-light bg-white text-black rounded-[11px] border border-black/15 hover:bg-black/[0.03] transition-colors"
             >
               <ArrowUpRight size={16} strokeWidth={1.75} />
