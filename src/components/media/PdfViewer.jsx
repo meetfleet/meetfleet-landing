@@ -124,7 +124,7 @@ const PdfViewer = ({ file, className = '' }) => {
           aria-label="Previous page"
           onClick={prev}
           disabled={page <= 1}
-          className="pointer-events-auto flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/80 bg-white/70 backdrop-blur-xl text-black/80 shadow-[0_8px_30px_rgba(0,0,0,0.15)] hover:bg-white active:scale-95 disabled:opacity-30 disabled:cursor-default transition-all"
+          className="pointer-events-auto flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/80 bg-white/70 backdrop-blur-xl text-black/80 shadow-[0_8px_30px_rgba(0,0,0,0.15)] hover:bg-white disabled:opacity-30 disabled:cursor-default transition-all"
         >
           <ChevronLeft size={18} strokeWidth={2} />
         </button>
@@ -139,7 +139,7 @@ const PdfViewer = ({ file, className = '' }) => {
           aria-label="Next page"
           onClick={next}
           disabled={numPages > 0 && page >= numPages}
-          className="pointer-events-auto flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/80 bg-white/70 backdrop-blur-xl text-black/80 shadow-[0_8px_30px_rgba(0,0,0,0.15)] hover:bg-white active:scale-95 disabled:opacity-30 disabled:cursor-default transition-all"
+          className="pointer-events-auto flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/80 bg-white/70 backdrop-blur-xl text-black/80 shadow-[0_8px_30px_rgba(0,0,0,0.15)] hover:bg-white disabled:opacity-30 disabled:cursor-default transition-all"
         >
           <ChevronRight size={18} strokeWidth={2} />
         </button>
@@ -148,7 +148,7 @@ const PdfViewer = ({ file, className = '' }) => {
           type="button"
           aria-label="Fullscreen"
           onClick={fullscreen}
-          className="pointer-events-auto flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/80 bg-white/70 backdrop-blur-xl text-black/80 shadow-[0_8px_30px_rgba(0,0,0,0.15)] hover:bg-white active:scale-95 transition-all"
+          className="pointer-events-auto flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/80 bg-white/70 backdrop-blur-xl text-black/80 shadow-[0_8px_30px_rgba(0,0,0,0.15)] hover:bg-white transition-all"
         >
           <Maximize2 size={16} strokeWidth={2} />
         </button>

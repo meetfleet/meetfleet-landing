@@ -116,7 +116,7 @@ const Navbar = () => {
             className="flex items-center group"
             aria-label="Meetfleet Home"
           >
-            <div className="w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 rounded-full flex items-center justify-center">
               <img src={logo} alt="Meetfleet Logo" className="h-[21px] w-auto block" />
             </div>
           </a>
@@ -168,7 +168,7 @@ const Navbar = () => {
             <a
               href="#download"
               onClick={(e) => handleScrollTo(e, '#download')}
-              className="px-5 py-2 text-[13.5px] font-medium bg-[#0033FF] text-white rounded-full hover:bg-[#0029cc] hover:shadow-[0_6px_20px_rgba(0,51,255,0.35)] active:scale-95 transition-all flex items-center gap-2 group"
+              className="px-5 py-2 text-[13.5px] font-medium bg-[#0033FF] text-white rounded-full hover:bg-[#0029cc] hover:shadow-[0_6px_20px_rgba(0,51,255,0.35)] transition-all flex items-center gap-2 group"
             >
               <DownloadIcon size={14} />
               <span>Download App</span>
@@ -183,7 +183,7 @@ const Navbar = () => {
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Fermer le menu' : 'Navigation'}
-            className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white/70 border border-white/60 text-black shadow-sm active:scale-95 transition-all"
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white/70 border border-white/60 text-black shadow-sm transition-all"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <rect
@@ -239,7 +239,7 @@ const Navbar = () => {
               type="button"
               onClick={() => setMobileMenuOpen(false)}
               aria-label="Fermer le menu"
-              className="absolute top-7 right-7 w-12 h-12 rounded-full bg-white/[0.07] border border-white/10 text-white/60 hover:text-white flex items-center justify-center hover:scale-108 hover:rotate-90 active:scale-95 transition-all"
+              className="absolute top-7 right-7 w-12 h-12 rounded-full bg-white/[0.07] border border-white/10 text-white/60 hover:text-white flex items-center justify-center transition-all"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
@@ -292,7 +292,7 @@ const Navbar = () => {
               <a
                 href="#download"
                 onClick={(e) => handleScrollTo(e, '#download')}
-                className="w-full py-4 px-8 bg-[#0033FF] hover:bg-[#0029cc] text-white text-[15px] font-semibold tracking-wide rounded-[16px] text-center shadow-[0_8px_24px_rgba(0,51,255,0.35)] flex items-center justify-center gap-2.5 active:scale-95 transition-all group"
+                className="w-full py-4 px-8 bg-[#0033FF] hover:bg-[#0029cc] text-white text-[15px] font-semibold tracking-wide rounded-[16px] text-center shadow-[0_8px_24px_rgba(0,51,255,0.35)] flex items-center justify-center gap-2.5 transition-all group"
               >
                 <DownloadIcon size={18} />
                 <span>Download App</span>

@@ -85,7 +85,7 @@ const IntroVideo = ({ onComplete }) => {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.3 }}
         onClick={handleVideoEnd}
-        className="absolute top-5 right-5 sm:top-8 sm:right-8 z-50 flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full backdrop-blur-md bg-black/40 hover:bg-black/60 active:scale-95 border border-white/20 hover:border-white/40 text-white/90 hover:text-white text-xs sm:text-sm font-medium tracking-wide shadow-lg cursor-pointer transition-all duration-200 select-none"
+        className="absolute top-5 right-5 sm:top-8 sm:right-8 z-50 flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full backdrop-blur-md bg-black/40 hover:bg-black/60 border border-white/20 hover:border-white/40 text-white/90 hover:text-white text-xs sm:text-sm font-medium tracking-wide shadow-lg cursor-pointer transition-all duration-200 select-none"
         aria-label="Skip intro video"
       >
         <span>Skip</span>

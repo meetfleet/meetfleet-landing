@@ -73,7 +73,7 @@ const Arrow = ({ dir, disabled, onClick }) => (
     className={`grid h-11 w-11 place-items-center rounded-full border transition-all duration-300
       ${disabled
         ? 'border-black/10 text-black/20 cursor-not-allowed'
-        : 'border-black/15 text-black/70 hover:border-black/40 hover:text-black hover:bg-black/5 active:scale-95'}`}
+        : 'border-black/15 text-black/70 hover:border-black/40 hover:text-black hover:bg-black/5'}`}
   >
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
          strokeLinecap="round" strokeLinejoin="round">
@@ -107,7 +107,7 @@ const Card = ({ plan }) => (
         <img
           src={plan.art}
           alt={plan.name}
-          className="w-full h-full object-cover rounded-full transition-transform duration-700 ease-out group-hover:scale-105"
+          className="w-full h-full object-cover rounded-full"
           loading="lazy"
         />
       </div>
