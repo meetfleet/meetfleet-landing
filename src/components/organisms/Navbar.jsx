@@ -163,13 +163,13 @@ const Navbar = () => {
             })}
           </nav>
 
-          {/* Right Action - Full Height Shadcn TestFlight CTA (Desktop) */}
+          {/* Right Action - Full Height Light TestFlight CTA (Desktop) */}
           <div className="hidden md:flex items-stretch self-stretch">
             <a
               href="https://testflight.apple.com/join/nXyfPMSc"
               target="_blank"
               rel="noopener noreferrer"
-              className="self-stretch flex items-center gap-2.5 px-4 py-2 text-[13.5px] font-medium bg-black text-white hover:bg-neutral-900 border border-neutral-800 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md group cursor-pointer relative overflow-hidden"
+              className="self-stretch flex items-center gap-2.5 px-4 py-2 text-[13.5px] font-medium bg-white text-black hover:bg-gray-50/90 border border-black/10 rounded-full transition-all duration-300 shadow-sm hover:shadow group cursor-pointer relative overflow-hidden"
             >
               <span>Meetfleet</span>
               <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-semibold tracking-wider uppercase bg-[#0033FF] text-white leading-none shadow-sm">
@@ -179,7 +179,7 @@ const Navbar = () => {
                 </span>
                 BETA
               </span>
-              <svg className="w-3.5 h-3.5 text-white/60 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-3.5 h-3.5 text-black/50 group-hover:text-black group-hover:translate-x-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </a>
@@ -289,7 +289,7 @@ const Navbar = () => {
               })}
             </ul>
 
-            {/* Dune Mobile CTA Button - Shadcn Style */}
+            {/* Dune Mobile CTA Button - Light & Fully Round */}
             <motion.div
               initial={{ y: 14, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -301,12 +301,19 @@ const Navbar = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3 px-8 bg-black hover:bg-black/90 border border-neutral-800 text-white text-[15px] font-medium tracking-wide rounded-lg text-center shadow-sm flex items-center justify-center gap-2.5 transition-all group cursor-pointer"
+                className="w-full py-3.5 px-8 bg-white hover:bg-gray-100 text-black text-[15px] font-medium tracking-wide rounded-full text-center shadow-sm flex items-center justify-center gap-2.5 transition-all group cursor-pointer"
               >
                 <span>Meetfleet</span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-[#0033FF] text-white leading-none">
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-[#0033FF] text-white leading-none">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+                  </span>
                   BETA
                 </span>
+                <svg className="w-4 h-4 text-black/50 group-hover:text-black group-hover:translate-x-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
               </a>
             </motion.div>
           </motion.div>
