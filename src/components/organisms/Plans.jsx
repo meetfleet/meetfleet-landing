@@ -84,9 +84,9 @@ const Arrow = ({ dir, disabled, onClick }) => (
 
 const Card = ({ plan }) => (
   <article
-    className={`group relative shrink-0 snap-start w-[88vw] sm:w-[500px] md:w-[540px] lg:w-[580px]
-               rounded-[34px] sm:rounded-[40px] py-9 sm:py-11 md:py-12 px-7 sm:px-9 md:px-10
-               min-h-[240px] sm:min-h-[270px] md:min-h-[290px]
+    className={`group relative shrink-0 snap-start w-[85vw] sm:w-[450px] md:w-[480px] lg:w-[510px]
+               rounded-[30px] sm:rounded-[36px] py-7 sm:py-8 md:py-9 px-6 sm:px-8 md:px-9
+               min-h-[190px] sm:min-h-[210px] md:min-h-[230px]
                flex items-center
                transition-all duration-500 ease-out
                ${plan.dark
@@ -101,9 +101,9 @@ const Card = ({ plan }) => (
                  opacity-40 transition-opacity duration-500 group-hover:opacity-100"
     />
 
-    <div className="flex items-center gap-7 sm:gap-9 md:gap-10 w-full">
+    <div className="flex items-center gap-4 sm:gap-5 md:gap-6 w-full">
       {/* Single Round 3D Graphic Element */}
-      <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-[176px] md:h-[176px] shrink-0 rounded-full overflow-hidden flex items-center justify-center">
+      <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 shrink-0 rounded-full overflow-hidden flex items-center justify-center">
         <img
           src={plan.art}
           alt={plan.name}
