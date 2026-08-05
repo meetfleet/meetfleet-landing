@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { name: 'OS', href: '#hero' },
   { name: 'Manifesto', href: '#message' },
   { name: 'SAS Score', href: '#sas' },
-  { name: 'Ascience', href: '#invention' },
+  { name: 'Social Activation Score', href: '#invention' },
   { name: 'Technology', href: '#technology' },
   { name: 'Ecosystem', href: '#ecosystem' },
   { name: 'Fleets', href: '#plans' },

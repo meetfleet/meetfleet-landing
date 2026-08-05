@@ -47,7 +47,7 @@ const InventionScene = () => {
             className="inline-flex items-center rounded-[11px] border border-[#0033FF] text-[#0033FF] text-[13px] md:text-sm font-light px-4 py-2 mb-8 will-change-transform"
             style={tag}
           >
-            Invention &amp; Science
+            Invention &amp; Social Activation
           </motion.span>
 
           {/* Heading */}
@@ -63,9 +63,8 @@ const InventionScene = () => {
             className="text-[15px] md:text-[16px] text-black/60 leading-relaxed mb-10 will-change-transform"
             style={{ ...body, fontFamily: '"Times New Roman", Times, serif', fontWeight: 400, fontStyle: 'normal' }}
           >
-            We built MeetFleet around a totally new concept we invented called Ascience,
-            which powers our Social Activation Score (SAS). Most platforms just match you
-            based on surface-level hobbies, but we wanted to solve the real problem: getting
+            We built MeetFleet around a totally new concept we invented called the Social Activation Score (SAS).
+            Most platforms just match you based on surface-level hobbies, but we wanted to solve the real problem: getting
             people to actually get off the couch and hang out. To do that, SAS looks way past
             basic interests to see if your personalities genuinely vibe, if you&rsquo;re both
             actually down for the same activity, how easy the commute is, and whether the
