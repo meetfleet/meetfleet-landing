@@ -144,7 +144,7 @@ const Navbar = () => {
                   href={link.href}
                   onMouseEnter={handleMouseEnter}
                   onClick={(e) => handleScrollTo(e, link.href)}
-                  className={`relative px-5 py-1.5 text-[13.5px] font-medium rounded-full transition-colors ${isActive
+                  className={`relative px-5 py-1.5 text-[13.5px] font-medium rounded-full whitespace-nowrap transition-colors ${isActive
                       ? 'text-[#0033FF] font-semibold'
                       : 'text-gray-600 hover:text-gray-900'
                     }`}
