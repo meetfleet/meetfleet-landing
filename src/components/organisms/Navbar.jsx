@@ -169,10 +169,12 @@ const Navbar = () => {
               href="https://testflight.apple.com/join/nXyfPMSc"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-2 text-[13.5px] font-medium bg-[#0033FF] text-white rounded-full hover:bg-[#0029cc] hover:shadow-[0_6px_20px_rgba(0,51,255,0.35)] transition-all flex items-center gap-2 group cursor-pointer"
+              className="px-3.5 py-1.5 text-[13.5px] font-medium bg-black text-white hover:bg-black/90 border border-neutral-800 rounded-lg transition-all flex items-center gap-2 group cursor-pointer shadow-sm"
             >
-              <DownloadIcon size={14} />
-              <span>TestFlight</span>
+              <span>Meetfleet</span>
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-semibold tracking-wider uppercase bg-[#0033FF] text-white leading-none">
+                BETA
+              </span>
             </a>
           </div>
 
@@ -280,7 +282,7 @@ const Navbar = () => {
               })}
             </ul>
 
-            {/* Dune Mobile CTA Button - #0033FF Blue */}
+            {/* Dune Mobile CTA Button - Shadcn Style */}
             <motion.div
               initial={{ y: 14, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -292,10 +294,12 @@ const Navbar = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-4 px-8 bg-[#0033FF] hover:bg-[#0029cc] text-white text-[15px] font-semibold tracking-wide rounded-[16px] text-center shadow-[0_8px_24px_rgba(0,51,255,0.35)] flex items-center justify-center gap-2.5 transition-all group cursor-pointer"
+                className="w-full py-3 px-8 bg-black hover:bg-black/90 border border-neutral-800 text-white text-[15px] font-medium tracking-wide rounded-lg text-center shadow-sm flex items-center justify-center gap-2.5 transition-all group cursor-pointer"
               >
-                <DownloadIcon size={18} />
-                <span>TestFlight</span>
+                <span>Meetfleet</span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-[#0033FF] text-white leading-none">
+                  BETA
+                </span>
               </a>
             </motion.div>
           </motion.div>
