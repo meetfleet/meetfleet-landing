@@ -101,12 +101,12 @@ const Navbar = () => {
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: isScrolled || mobileMenuOpen ? 0 : -50, opacity: isScrolled || mobileMenuOpen ? 1 : 0 }}
           transition={{ type: 'spring', stiffness: 120, damping: 20 }}
-          className={`pointer-events-auto w-full max-w-5xl rounded-full flex items-center justify-between px-5 sm:px-7 py-3 transition-[background,border-color,box-shadow,padding] duration-500 border will-change-transform ${
+          className={`pointer-events-auto w-full max-w-5xl rounded-full flex items-center justify-between transition-[background,border-color,box-shadow,padding] duration-500 border will-change-transform ${
             mobileMenuOpen
-              ? 'bg-transparent border-transparent shadow-none'
+              ? 'bg-transparent border-transparent shadow-none px-5 py-3'
               : isScrolled
-              ? 'bg-white/65 backdrop-blur-[22px] backdrop-saturate-[180%] border-white/70 shadow-[0_2px_28px_rgba(0,0,0,0.10)] py-2.5'
-              : 'bg-white/18 backdrop-blur-[16px] backdrop-saturate-[150%] border-white/40 shadow-none'
+              ? 'bg-white/65 backdrop-blur-[22px] backdrop-saturate-[180%] border-white/70 shadow-[0_2px_28px_rgba(0,0,0,0.10)] pl-5 sm:pl-6 pr-1.5 py-1.5'
+              : 'bg-white/18 backdrop-blur-[16px] backdrop-saturate-[150%] border-white/40 shadow-none pl-5 sm:pl-6 pr-1.5 py-1.5'
           }`}
         >
           {/* Logo ONLY - No text wordmark beside it */}
@@ -163,18 +163,25 @@ const Navbar = () => {
             })}
           </nav>
 
-          {/* Right Action - TestFlight CTA (Desktop) */}
-          <div className="hidden md:flex items-center">
+          {/* Right Action - Full Height Shadcn TestFlight CTA (Desktop) */}
+          <div className="hidden md:flex items-stretch self-stretch">
             <a
               href="https://testflight.apple.com/join/nXyfPMSc"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3.5 py-1.5 text-[13.5px] font-medium bg-black text-white hover:bg-black/90 border border-neutral-800 rounded-lg transition-all flex items-center gap-2 group cursor-pointer shadow-sm"
+              className="self-stretch flex items-center gap-2.5 px-4 py-2 text-[13.5px] font-medium bg-black text-white hover:bg-neutral-900 border border-neutral-800 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md group cursor-pointer relative overflow-hidden"
             >
               <span>Meetfleet</span>
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-semibold tracking-wider uppercase bg-[#0033FF] text-white leading-none">
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-semibold tracking-wider uppercase bg-[#0033FF] text-white leading-none shadow-sm">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+                </span>
                 BETA
               </span>
+              <svg className="w-3.5 h-3.5 text-white/60 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
             </a>
           </div>
 
