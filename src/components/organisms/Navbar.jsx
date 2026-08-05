@@ -7,8 +7,8 @@ import { springScrollTo } from '../../utils/smoothScroll';
 const NAV_LINKS = [
   { name: 'OS', href: '#hero' },
   { name: 'Manifesto', href: '#message' },
-  { name: 'SAS Score', href: '#sas' },
-  { name: 'Social Activation Score', href: '#invention' },
+  { name: 'SAS', href: '#sas' },
+  { name: 'Invention', href: '#invention' },
   { name: 'Technology', href: '#technology' },
   { name: 'Ecosystem', href: '#ecosystem' },
   { name: 'Fleets', href: '#plans' },
@@ -101,13 +101,12 @@ const Navbar = () => {
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: isScrolled || mobileMenuOpen ? 0 : -50, opacity: isScrolled || mobileMenuOpen ? 1 : 0 }}
           transition={{ type: 'spring', stiffness: 120, damping: 20 }}
-          className={`pointer-events-auto w-full max-w-5xl rounded-full flex items-center justify-between transition-[background,border-color,box-shadow,padding] duration-500 border will-change-transform ${
-            mobileMenuOpen
+          className={`pointer-events-auto w-full max-w-5xl rounded-full flex items-center justify-between transition-[background,border-color,box-shadow,padding] duration-500 border will-change-transform ${mobileMenuOpen
               ? 'bg-transparent border-transparent shadow-none px-5 py-3'
               : isScrolled
-              ? 'bg-white/65 backdrop-blur-[22px] backdrop-saturate-[180%] border-white/70 shadow-[0_2px_28px_rgba(0,0,0,0.10)] pl-5 sm:pl-6 pr-1.5 py-1.5'
-              : 'bg-white/18 backdrop-blur-[16px] backdrop-saturate-[150%] border-white/40 shadow-none pl-5 sm:pl-6 pr-1.5 py-1.5'
-          }`}
+                ? 'bg-white/65 backdrop-blur-[22px] backdrop-saturate-[180%] border-white/70 shadow-[0_2px_28px_rgba(0,0,0,0.10)] pl-5 sm:pl-6 pr-1.5 py-1.5'
+                : 'bg-white/18 backdrop-blur-[16px] backdrop-saturate-[150%] border-white/40 shadow-none pl-5 sm:pl-6 pr-1.5 py-1.5'
+            }`}
         >
           {/* Logo ONLY - No text wordmark beside it */}
           <a
@@ -145,11 +144,10 @@ const Navbar = () => {
                   href={link.href}
                   onMouseEnter={handleMouseEnter}
                   onClick={(e) => handleScrollTo(e, link.href)}
-                  className={`relative px-5 py-1.5 text-[13.5px] font-medium rounded-full transition-colors ${
-                    isActive
+                  className={`relative px-5 py-1.5 text-[13.5px] font-medium rounded-full transition-colors ${isActive
                       ? 'text-[#0033FF] font-semibold'
                       : 'text-gray-600 hover:text-gray-900'
-                  }`}
+                    }`}
                 >
                   {link.name}
                   {isActive && (
@@ -200,9 +198,8 @@ const Navbar = () => {
                 height="1.5"
                 rx="0.75"
                 fill="currentColor"
-                className={`transition-transform duration-300 origin-center ${
-                  mobileMenuOpen ? 'translate-y-[4.75px] rotate-45' : ''
-                }`}
+                className={`transition-transform duration-300 origin-center ${mobileMenuOpen ? 'translate-y-[4.75px] rotate-45' : ''
+                  }`}
               />
               <rect
                 x="3"
@@ -211,9 +208,8 @@ const Navbar = () => {
                 height="1.5"
                 rx="0.75"
                 fill="currentColor"
-                className={`transition-opacity duration-300 ${
-                  mobileMenuOpen ? 'opacity-0' : 'opacity-100'
-                }`}
+                className={`transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : 'opacity-100'
+                  }`}
               />
               <rect
                 x="3"
@@ -222,9 +218,8 @@ const Navbar = () => {
                 height="1.5"
                 rx="0.75"
                 fill="currentColor"
-                className={`transition-transform duration-300 origin-center ${
-                  mobileMenuOpen ? '-translate-y-[4.75px] -rotate-45' : ''
-                }`}
+                className={`transition-transform duration-300 origin-center ${mobileMenuOpen ? '-translate-y-[4.75px] -rotate-45' : ''
+                  }`}
               />
             </svg>
           </button>
@@ -274,9 +269,8 @@ const Navbar = () => {
                     <a
                       href={link.href}
                       onClick={(e) => handleScrollTo(e, link.href)}
-                      className={`flex items-center gap-4 text-[clamp(2.1rem,8.5vw,3.2rem)] font-light tracking-[-0.035em] leading-[1.08] transition-colors relative z-10 ${
-                        isActive ? 'text-white font-normal' : 'text-white/45 hover:text-white/85'
-                      }`}
+                      className={`flex items-center gap-4 text-[clamp(2.1rem,8.5vw,3.2rem)] font-light tracking-[-0.035em] leading-[1.08] transition-colors relative z-10 ${isActive ? 'text-white font-normal' : 'text-white/45 hover:text-white/85'
+                        }`}
                     >
                       {/* Active thin dash line before text */}
                       {isActive && (
