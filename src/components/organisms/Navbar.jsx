@@ -163,18 +163,16 @@ const Navbar = () => {
             })}
           </nav>
 
-          {/* Right Action - Download CTA (Desktop) */}
+          {/* Right Action - TestFlight CTA (Desktop) */}
           <div className="hidden md:flex items-center">
             <a
-              href="#download"
-              onClick={(e) => handleScrollTo(e, '#download')}
-              className="px-5 py-2 text-[13.5px] font-medium bg-[#0033FF] text-white rounded-full hover:bg-[#0029cc] hover:shadow-[0_6px_20px_rgba(0,51,255,0.35)] transition-all flex items-center gap-2 group"
+              href="https://testflight.apple.com/join/nXyfPMSc"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2 text-[13.5px] font-medium bg-[#0033FF] text-white rounded-full hover:bg-[#0029cc] hover:shadow-[0_6px_20px_rgba(0,51,255,0.35)] transition-all flex items-center gap-2 group cursor-pointer"
             >
               <DownloadIcon size={14} />
-              <span>Download App</span>
-              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-white/20 text-white border border-white/30 backdrop-blur-md group-hover:bg-white/30 transition-all">
-                Soon
-              </span>
+              <span>TestFlight</span>
             </a>
           </div>
 
@@ -290,15 +288,14 @@ const Navbar = () => {
               className="pt-8"
             >
               <a
-                href="#download"
-                onClick={(e) => handleScrollTo(e, '#download')}
-                className="w-full py-4 px-8 bg-[#0033FF] hover:bg-[#0029cc] text-white text-[15px] font-semibold tracking-wide rounded-[16px] text-center shadow-[0_8px_24px_rgba(0,51,255,0.35)] flex items-center justify-center gap-2.5 transition-all group"
+                href="https://testflight.apple.com/join/nXyfPMSc"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-4 px-8 bg-[#0033FF] hover:bg-[#0029cc] text-white text-[15px] font-semibold tracking-wide rounded-[16px] text-center shadow-[0_8px_24px_rgba(0,51,255,0.35)] flex items-center justify-center gap-2.5 transition-all group cursor-pointer"
               >
                 <DownloadIcon size={18} />
-                <span>Download App</span>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-white/20 text-white border border-white/30 backdrop-blur-md">
-                  Soon
-                </span>
+                <span>TestFlight</span>
               </a>
             </motion.div>
           </motion.div>

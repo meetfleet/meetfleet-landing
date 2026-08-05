@@ -53,7 +53,7 @@ const Footer = () => {
               Experience
             </h3>
             <ul className="flex flex-col gap-2">
-              <li><a href="#download" className="hover:text-[#1d1d1f] transition-colors">Download for iOS</a></li>
+              <li><a href="https://testflight.apple.com/join/nXyfPMSc" target="_blank" rel="noopener noreferrer" className="hover:text-[#1d1d1f] transition-colors">Download for iOS (TestFlight)</a></li>
               <li><a href="#download" className="hover:text-[#1d1d1f] transition-colors">Download for Android</a></li>
               <li><a href="https://meetfleet.app" target="_blank" rel="noopener noreferrer" className="hover:text-[#1d1d1f] transition-colors">Meetfleet Web App</a></li>
               <li><a href="https://meetfleet.app" target="_blank" rel="noopener noreferrer" className="hover:text-[#1d1d1f] transition-colors">Sign In</a></li>
