@@ -87,11 +87,13 @@ const InventionScene = () => {
               Research Paper
             </a>
             <a
-              href="https://research.meetfleet.org/"
+              href="https://www.academia.edu/171850400/Meetfleets_Social_Activation_Score_SAS_"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[14px] font-light bg-white text-black rounded-[11px] border border-black/15 hover:bg-black/[0.03] transition-colors"
             >
               <ArrowUpRight size={16} strokeWidth={1.75} />
-              Peer Review
+              Academia.edu
             </a>
           </motion.div>
         </div>
