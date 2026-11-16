@@ -3,6 +3,25 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Download as DownloadIcon } from 'lucide-react';
 import logo from '../../assets/logo.svg';
 import { springScrollTo } from '../../utils/smoothScroll';
+import { PLAY_URL, TESTFLIGHT_URL, storeClick } from '../../utils/storeLinks';
+import { PlayIcon, AppleIcon } from '../icons/StoreIcons';
+
+// Status chips for the store buttons. LIVE pulses; BETA stays quiet.
+const LiveChip = ({ size = 'sm' }) => (
+  <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'} font-semibold tracking-wider uppercase bg-[#0033FF] text-white leading-none shadow-sm`}>
+    <span className="relative flex h-1.5 w-1.5">
+      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+    </span>
+    LIVE
+  </span>
+);
+
+const BetaChip = ({ size = 'sm', dark = false }) => (
+  <span className={`inline-flex items-center px-2 py-0.5 rounded-full ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'} font-semibold tracking-wider uppercase leading-none ${dark ? 'bg-white/[0.12] text-white/70' : 'bg-black/[0.06] text-black/55'}`}>
+    BETA
+  </span>
+);
 
 const NAV_LINKS = [
   { name: 'OS', href: '#hero' },
@@ -124,7 +143,7 @@ const Navbar = () => {
           <nav
             ref={navContainerRef}
             onMouseLeave={handleMouseLeave}
-            className="hidden md:flex items-center gap-1 relative px-2 py-1 rounded-full"
+            className="hidden md:flex items-center lg:gap-1 relative px-2 py-1 rounded-full"
           >
             {/* Hover Sliding Pill Indicator */}
             <div
@@ -144,7 +163,7 @@ const Navbar = () => {
                   href={link.href}
                   onMouseEnter={handleMouseEnter}
                   onClick={(e) => handleScrollTo(e, link.href)}
-                  className={`relative px-5 py-1.5 text-[13.5px] font-medium rounded-full whitespace-nowrap transition-colors ${isActive
+                  className={`relative px-2 lg:px-3.5 xl:px-5 py-1.5 text-[13.5px] font-medium rounded-full whitespace-nowrap transition-colors ${isActive
                       ? 'text-[#0033FF] font-semibold'
                       : 'text-gray-600 hover:text-gray-900'
                     }`}
@@ -161,26 +180,35 @@ const Navbar = () => {
             })}
           </nav>
 
-          {/* Right Action - Full Height Light TestFlight CTA (Desktop) */}
-          <div className="hidden md:flex items-stretch self-stretch">
-            <a
-              href="https://testflight.apple.com/join/nXyfPMSc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="self-stretch flex items-center gap-2.5 px-4 py-2 text-[13.5px] font-medium bg-white text-black hover:bg-gray-50/90 border border-black/10 rounded-full transition-all duration-300 shadow-sm hover:shadow group cursor-pointer relative overflow-hidden"
-            >
-              <span>Meetfleet</span>
-              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-semibold tracking-wider uppercase bg-[#0033FF] text-white leading-none shadow-sm">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
-                </span>
-                BETA
-              </span>
-              <svg className="w-3.5 h-3.5 text-black/50 group-hover:text-black group-hover:translate-x-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </a>
+          {/* Right Action - Split store pill: Android (live) | iOS (beta) (Desktop) */}
+          <div className="hidden md:flex items-stretch self-stretch shrink-0">
+            <div className="self-stretch flex items-stretch bg-white text-black text-[13.5px] font-medium border border-black/10 rounded-full shadow-sm hover:shadow transition-shadow duration-300 overflow-hidden">
+              <a
+                href={PLAY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={storeClick('play')}
+                aria-label="Meetfleet for Android on Google Play (live)"
+                className="flex items-center gap-2 pl-3 lg:pl-4 pr-2.5 lg:pr-3 py-2 whitespace-nowrap hover:bg-gray-50/90 transition-colors cursor-pointer"
+              >
+                <PlayIcon className="w-3 h-3" />
+                <span className="hidden lg:inline">Android</span>
+                <LiveChip />
+              </a>
+              <span className="w-px my-2 bg-black/10" aria-hidden="true" />
+              <a
+                href={TESTFLIGHT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={storeClick('testflight')}
+                aria-label="Meetfleet for iOS on TestFlight (beta)"
+                className="flex items-center gap-2 pl-2.5 lg:pl-3 pr-3 lg:pr-4 py-2 whitespace-nowrap hover:bg-gray-50/90 transition-colors cursor-pointer"
+              >
+                <AppleIcon className="w-3 h-3.5 -mt-px" />
+                <span className="hidden lg:inline">iOS</span>
+                <BetaChip />
+              </a>
+            </div>
           </div>
 
           {/* Dune Morphing 3-Bar Burger Button (Mobile) */}
@@ -288,24 +316,33 @@ const Navbar = () => {
               initial={{ y: 14, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.44, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="pt-8"
+              className="pt-8 flex flex-col gap-2.5"
             >
               <a
-                href="https://testflight.apple.com/join/nXyfPMSc"
+                href={PLAY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3.5 px-8 bg-white hover:bg-gray-100 text-black text-[15px] font-medium tracking-wide rounded-full text-center shadow-sm flex items-center justify-center gap-2.5 transition-all group cursor-pointer"
+                onClick={storeClick('play', () => setMobileMenuOpen(false))}
+                className="w-full py-3.5 px-5 bg-white hover:bg-gray-100 text-black text-[15px] font-medium tracking-wide rounded-full text-center shadow-sm flex items-center justify-center gap-2 whitespace-nowrap transition-all group cursor-pointer"
               >
-                <span>Meetfleet</span>
-                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-[#0033FF] text-white leading-none">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
-                  </span>
-                  BETA
-                </span>
-                <svg className="w-4 h-4 text-black/50 group-hover:text-black group-hover:translate-x-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <PlayIcon className="w-3.5 h-3.5" />
+                <span>Meetfleet for Android</span>
+                <LiveChip size="lg" />
+                <svg className="hidden min-[370px]:block shrink-0 w-4 h-4 text-black/50 group-hover:text-black group-hover:translate-x-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </a>
+              <a
+                href={TESTFLIGHT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={storeClick('testflight', () => setMobileMenuOpen(false))}
+                className="w-full py-3.5 px-5 bg-white/[0.07] hover:bg-white/[0.12] border border-white/10 text-white text-[15px] font-medium tracking-wide rounded-full text-center flex items-center justify-center gap-2 whitespace-nowrap transition-all group cursor-pointer"
+              >
+                <AppleIcon className="w-3.5 h-4 -mt-px" />
+                <span>Meetfleet for iOS</span>
+                <BetaChip size="lg" dark />
+                <svg className="hidden min-[370px]:block shrink-0 w-4 h-4 text-white/50 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
               </a>

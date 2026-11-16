@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import logo from '../../assets/logo.svg';
+import { PLAY_URL, TESTFLIGHT_URL, storeClick } from '../../utils/storeLinks';
 
 const Footer = () => {
   return (
@@ -53,8 +54,8 @@ const Footer = () => {
               Experience
             </h3>
             <ul className="flex flex-col gap-2">
-              <li><a href="https://testflight.apple.com/join/nXyfPMSc" target="_blank" rel="noopener noreferrer" className="hover:text-[#1d1d1f] transition-colors">Download for iOS (TestFlight)</a></li>
-              <li><a href="#download" className="hover:text-[#1d1d1f] transition-colors">Download for Android</a></li>
+              <li><a href={PLAY_URL} target="_blank" rel="noopener noreferrer" onClick={storeClick('play')} className="hover:text-[#1d1d1f] transition-colors">Download for Android (Google Play)</a></li>
+              <li><a href={TESTFLIGHT_URL} target="_blank" rel="noopener noreferrer" onClick={storeClick('testflight')} className="hover:text-[#1d1d1f] transition-colors">Download for iOS (TestFlight)</a></li>
               <li><a href="https://meetfleet.app" target="_blank" rel="noopener noreferrer" className="hover:text-[#1d1d1f] transition-colors">Meetfleet Web App</a></li>
               <li><a href="https://meetfleet.app" target="_blank" rel="noopener noreferrer" className="hover:text-[#1d1d1f] transition-colors">Sign In</a></li>
             </ul>

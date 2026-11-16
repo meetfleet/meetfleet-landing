@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import heroImage from '../../assets/hero.webp';
 import logo from '../../assets/logo.svg';
+import { PLAY_URL, TESTFLIGHT_URL, storeClick } from '../../utils/storeLinks';
 
 const Hero = () => {
   return (
@@ -46,23 +47,37 @@ const Hero = () => {
             Meetfleet is hyper-local coordination for the spontaneous era, a social OS connecting you instantly with real-time activities around you, from golf foursomes and romantic dates to group shopping, skiing, riding, and beach sessions.
           </motion.p>
 
-          {/* TestFlight download badge */}
+          {/* Store badges: Google Play, then TestFlight */}
           <motion.div
-            className="flex flex-col items-center z-10 mt-6 sm:mt-8 md:mt-10"
+            className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 z-10 mt-6 sm:mt-8 md:mt-10"
             initial={{ opacity: 0, filter: 'blur(12px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
           >
             <a
-              href="https://testflight.apple.com/join/nXyfPMSc"
+              href={PLAY_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={storeClick('play')}
               className="cursor-pointer"
             >
-              <img 
-                src="/testflight.webp" 
-                alt="Available on TestFlight" 
-                className="h-[48px] md:h-[54px] w-auto cursor-pointer" 
+              <img
+                src="/google.webp"
+                alt="Get it on Google Play"
+                className="h-[50px] sm:h-[54px] md:h-[60px] w-auto cursor-pointer"
+              />
+            </a>
+            <a
+              href={TESTFLIGHT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={storeClick('testflight')}
+              className="cursor-pointer"
+            >
+              <img
+                src="/testflight.webp"
+                alt="Available on TestFlight"
+                className="h-[50px] sm:h-[54px] md:h-[60px] w-auto cursor-pointer"
               />
             </a>
           </motion.div>

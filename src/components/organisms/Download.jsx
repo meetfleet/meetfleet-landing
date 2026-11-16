@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import logo from '../../assets/logo.svg';
+import { PLAY_URL, TESTFLIGHT_URL, storeClick } from '../../utils/storeLinks';
 
 const devices = '/devices.webp';       // device lineup (1300 x 454 ≈ 2.86:1)
 
@@ -44,13 +45,20 @@ const Download = () => {
             Download the history&rsquo;s first social operating system, works with all your devices
           </motion.p>
 
-          {/* TestFlight download badge */}
-          <motion.div className="mb-8 md:mb-10 flex flex-col items-center" {...reveal(0.15)}>
-            <a href="https://testflight.apple.com/join/nXyfPMSc" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
-              <img 
-                src="/testflight.webp" 
-                alt="Available on TestFlight" 
-                className="h-[52px] md:h-[58px] w-auto cursor-pointer" 
+          {/* Store badges: Google Play, then TestFlight */}
+          <motion.div className="mb-8 md:mb-10 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3" {...reveal(0.15)}>
+            <a href={PLAY_URL} target="_blank" rel="noopener noreferrer" onClick={storeClick('play')} className="cursor-pointer">
+              <img
+                src="/google.webp"
+                alt="Get it on Google Play"
+                className="h-[50px] sm:h-[56px] md:h-[64px] w-auto cursor-pointer"
+              />
+            </a>
+            <a href={TESTFLIGHT_URL} target="_blank" rel="noopener noreferrer" onClick={storeClick('testflight')} className="cursor-pointer">
+              <img
+                src="/testflight.webp"
+                alt="Available on TestFlight"
+                className="h-[50px] sm:h-[56px] md:h-[64px] w-auto cursor-pointer"
               />
             </a>
           </motion.div>
